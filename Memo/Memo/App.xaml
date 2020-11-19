@@ -1,0 +1,19 @@
+﻿<Application x:Class="Memo.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Memo"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="MyResourceDict.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/SYControlLibrary;component/SYButtonEX.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/SYControlLibrary;component/SYCheckBoxStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/SYControlLibrary;component/SYTextBoxStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/SYControlLibrary;component/TestDictionary.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/SYControlLibrary;component/WindowShadowStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
+ 
