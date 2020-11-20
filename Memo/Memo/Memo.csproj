@@ -115,5 +115,14 @@
     <Resource Include="res\set.png" />
     <Resource Include="res\set_1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\未标题-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\未标题-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\未标题-4.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

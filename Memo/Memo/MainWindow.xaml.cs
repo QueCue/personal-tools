@@ -62,6 +62,9 @@ namespace Memo
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
+            //SYTest
+            Topmost = true;
+            return;
             m_currentWindow = new WindowInteropHelper(Application.Current.MainWindow).Handle;
             m_oriParent = GetWindowLong(m_currentWindow, GWL_HWNDPARENT);
             m_desktopParent = FindWindowEx
@@ -75,6 +78,11 @@ namespace Memo
                 , "SysListView32"
                 , "FolderView");
             SetWindowLong(m_currentWindow, GWL_HWNDPARENT, m_desktopParent);
+        }
+
+        private void OnSettingClick(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -4,26 +4,26 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Memo" xmlns:sy="clr-namespace:SYControlLibrary;assembly=SYControlLibrary"
-        mc:Ignorable="d" WindowStyle="None"  Background="#E5ADD8E6"
-        WindowStartupLocation="CenterScreen" ResizeMode="CanResize" AllowsTransparency="True"
+        mc:Ignorable="d" WindowStyle="None"  Background="#fff7d1"
+        WindowStartupLocation="CenterScreen" ResizeMode="CanResize" AllowsTransparency="False"
         Title="MainWindow" Height="330" Width="240" Loaded="MainWindow_OnLoaded"
-        SizeChanged="Window_SizeChanged" ShowInTaskbar="False" TextOptions.TextFormattingMode="Display"
-        RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True" UseLayoutRounding="True">
+        SizeChanged="Window_SizeChanged" ShowInTaskbar="False" TextOptions.TextFormattingMode="Display">
+    <!--RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True" UseLayoutRounding="True"-->
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" ResizeBorderThickness="5"/>
     </WindowChrome.WindowChrome>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="32"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Border Name="TitleBar" Grid.Row="0" Background="LightSteelBlue" />
+        <Border Name="TitleBar" Grid.Row="0" Background="#fff2ab" />
         <StackPanel Orientation="Horizontal" Grid.Row="0">
             <Button Content="+" Width="20" Height="20" Margin="5"/>
             <TextBlock Text="标题" VerticalAlignment="Center" Margin="0,7,0,6" Height="17"/>
         </StackPanel>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button FontSize="14" Width="30" Height="30" Margin="5" Click="OnOptionClick">
+            <!--<Button FontSize="14" Width="30" Height="30" Margin="5" Click="OnOptionClick">
                 <Button.Background>
                     <ImageBrush ImageSource="pack://application:,,,/Memo;component/res/set.png"/>
                 </Button.Background>
@@ -31,13 +31,19 @@
                     <ImageBrush ImageSource="pack://application:,,,/Memo;component/res/close.png"/>
                 </Button.Foreground>
             </Button>
-            <Button Content="←" FontSize="14" Width="20" Height="20" Click="OnTopMostClick"/>
-            <sy:SYButtonEX x:Name="m_CloseBtn" Width="20" Height="20"
-                         Click="OnCloseClick" Margin="5">
-                <sy:SYButtonEX.Background>
-                    <ImageBrush ImageSource="pack://application:,,,/Memo;component/res/close.png"/>
-                </sy:SYButtonEX.Background>
-            </sy:SYButtonEX>
+            <Button Content="←" FontSize="14" Width="20" Height="20" Click="OnTopMostClick"/>-->
+            <Button x:Name="m_SettingBtn" Width="32" Height="32"
+                         Click="OnSettingClick" Margin="0" Style="{StaticResource MyButton}">
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://application:,,,/Memo;component/res/close.png" Opacity="0.6" Stretch="None"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="m_CloseBtn" Width="33" Height="33" 
+                         Click="OnCloseClick" Style="{StaticResource MyButton}" >
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://application:,,,/Memo;component/res/未标题-4.png" Opacity="0.6" Stretch="None" />
+                </Button.Background>
+            </Button>
         </StackPanel>
         <TextBox Grid.Row="1" Margin="10" Text="141223" FontSize="16" 
                  Background="Transparent" BorderThickness="0" AcceptsReturn="True"
