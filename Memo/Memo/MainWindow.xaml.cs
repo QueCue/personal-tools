@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
+using System.Windows.Media;
 
 namespace Memo
 {
@@ -50,7 +51,16 @@ namespace Memo
             Topmost = !Topmost;
             if (sender is Button btn)
             {
-                btn.Content = Topmost ? "↓" : "←";
+                var tg = btn.RenderTransform as TransformGroup;
+                var tgNew = tg.CloneCurrentValue();
+                if (null != tgNew)
+                {
+                    RotateTransform rt = tgNew.Children[2] as RotateTransform;
+                    btn.RenderTransformOrigin = new Point(0.5, 0.5);
+                    rt.Angle = Topmost ? 0 : 90;
+                }
+
+                btn.RenderTransform = tgNew;
             }
 
             SetWindowLong(m_currentWindow, GWL_HWNDPARENT, Topmost ? m_oriParent : m_desktopParent);
@@ -63,8 +73,6 @@ namespace Memo
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
             //SYTest
-            Topmost = true;
-            return;
             m_currentWindow = new WindowInteropHelper(Application.Current.MainWindow).Handle;
             m_oriParent = GetWindowLong(m_currentWindow, GWL_HWNDPARENT);
             m_desktopParent = FindWindowEx
@@ -81,6 +89,11 @@ namespace Memo
         }
 
         private void OnSettingClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnNewClick(object sender, RoutedEventArgs e)
         {
 
         }

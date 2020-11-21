@@ -99,7 +99,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="res\btn_close.png" />
+    <Resource Include="res\new.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\SYControlLibrary\SYControlLibrary.csproj">
@@ -108,21 +108,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="res\add-select.png" />
     <Resource Include="res\close.png" />
-    <Resource Include="res\pin-fill.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\setting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\option.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="res\pin.png" />
-    <Resource Include="res\set.png" />
-    <Resource Include="res\set_1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="res\未标题-1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="res\未标题-2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="res\未标题-4.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

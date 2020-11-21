@@ -9,9 +9,7 @@
                     <Grid>
                         <Border Name="border1" BorderThickness="0" BorderBrush="Black" 
                                 Background="Transparent"/>
-                        <Border Name="border2" Background="{TemplateBinding Background}" >
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
+                        <Border Name="border2" Background="{TemplateBinding Background}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">

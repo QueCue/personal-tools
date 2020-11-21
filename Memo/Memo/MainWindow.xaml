@@ -19,29 +19,40 @@
         </Grid.RowDefinitions>
         <Border Name="TitleBar" Grid.Row="0" Background="#fff2ab" />
         <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <Button Content="+" Width="20" Height="20" Margin="5"/>
+            <Button Width="32" Height="32"
+                         Click="OnNewClick" Style="{StaticResource MyButton}" >
+                <Button.Background>
+                    <ImageBrush ImageSource="res/new.png" Opacity="0.6" Stretch="None"
+                                Viewport="-0.01,-0.01,1,1" Viewbox="0.01,0.01,1,1"/>
+                </Button.Background>
+            </Button>
             <TextBlock Text="标题" VerticalAlignment="Center" Margin="0,7,0,6" Height="17"/>
         </StackPanel>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <!--<Button FontSize="14" Width="30" Height="30" Margin="5" Click="OnOptionClick">
+            <Button Width="32" Height="32"
+                         Click="OnOptionClick" Margin="0" Style="{StaticResource MyButton}">
                 <Button.Background>
-                    <ImageBrush ImageSource="pack://application:,,,/Memo;component/res/set.png"/>
-                </Button.Background>
-                <Button.Foreground>
-                    <ImageBrush ImageSource="pack://application:,,,/Memo;component/res/close.png"/>
-                </Button.Foreground>
-            </Button>
-            <Button Content="←" FontSize="14" Width="20" Height="20" Click="OnTopMostClick"/>-->
-            <Button x:Name="m_SettingBtn" Width="32" Height="32"
-                         Click="OnSettingClick" Margin="0" Style="{StaticResource MyButton}">
-                <Button.Background>
-                    <ImageBrush ImageSource="pack://application:,,,/Memo;component/res/close.png" Opacity="0.6" Stretch="None"/>
+                    <ImageBrush ImageSource="res/option.png" Opacity="0.6" Stretch="None"/>
                 </Button.Background>
             </Button>
-            <Button x:Name="m_CloseBtn" Width="33" Height="33" 
+            <Button Width="32" Height="32"
+                         Click="OnTopMostClick" Margin="0" Style="{StaticResource MyButton}" RenderTransformOrigin="0.5,0.5">
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+                <Button.Background>
+                    <ImageBrush ImageSource="res/pin.png" Opacity="0.6" Stretch="None"/>
+                </Button.Background>
+            </Button>
+            <Button Width="32" Height="32"
                          Click="OnCloseClick" Style="{StaticResource MyButton}" >
                 <Button.Background>
-                    <ImageBrush ImageSource="pack://application:,,,/Memo;component/res/未标题-4.png" Opacity="0.6" Stretch="None" />
+                    <ImageBrush ImageSource="res/close.png" Opacity="0.6" Stretch="None"/>
                 </Button.Background>
             </Button>
         </StackPanel>
