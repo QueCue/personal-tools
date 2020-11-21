@@ -1,9 +1,9 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using Memo.tools;
+using System;
+using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Interop;
-using System.Windows.Media;
 
 namespace Memo
 {
@@ -12,90 +12,85 @@ namespace Memo
     /// </summary>
     public partial class MainWindow : Window
     {
-        const int GWL_HWNDPARENT = -8;
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetWindowLong(IntPtr hWnd, int nIndex);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern int SetWindowLong(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern IntPtr FindWindow(string lpWindowClass, string lpWindowName);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string className, string windowTitle);
-
-        [DllImport("user32.dll")]
-        static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
-
-        private IntPtr m_oriParent;
-        private IntPtr m_desktopParent;
-        private IntPtr m_currentWindow;
-
         public MainWindow()
         {
             InitializeComponent();
-            MouseLeftButtonDown += (sender, e) => DragMove();
         }
 
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e) { }
+        #region 系统托盘
+        NotifyIcon notifyIcon;
 
-        private void OnCloseClick(object sender, RoutedEventArgs e)
+        //托盘右键菜单集合
+        private List<SystemTrayMenu> GetList()
+        {
+            List<SystemTrayMenu> ls = new List<SystemTrayMenu>
+            {
+                new SystemTrayMenu() { Txt = "新建", Click = OnNewClick },
+                new SystemTrayMenu() { Txt = "设置", Icon = "../../res/setting.png", Click = OnSettingClick },
+                new SystemTrayMenu() { Txt = "关于", Click = OnAboutClick },
+                new SystemTrayMenu() { Txt = "退出", Click = OnExitClick }
+            };
+
+            return ls;
+        }
+
+        #region 托盘右键菜单
+
+        private void OnNewClick(object sender, EventArgs e)
+        {
+            New();
+        }
+
+        private void OnSettingClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void OnAboutClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void OnExitClick(object sender, EventArgs e)
         {
             Close();
+            System.Windows.Application.Current.Shutdown();
         }
 
-        private void OnTopMostClick(object sender, RoutedEventArgs e)
+        #endregion
+
+        #endregion
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Topmost = !Topmost;
-            if (sender is Button btn)
-            {
-                var tg = btn.RenderTransform as TransformGroup;
-                var tgNew = tg.CloneCurrentValue();
-                if (null != tgNew)
-                {
-                    RotateTransform rt = tgNew.Children[2] as RotateTransform;
-                    btn.RenderTransformOrigin = new Point(0.5, 0.5);
-                    rt.Angle = Topmost ? 0 : 90;
-                }
-
-                btn.RenderTransform = tgNew;
-            }
-
-            SetWindowLong(m_currentWindow, GWL_HWNDPARENT, Topmost ? m_oriParent : m_desktopParent);
+            //系统托盘
+            SystemTrayParameter pars = new SystemTrayParameter("../../res/icon.ico", "QC便笺", "", 0, null);
+            notifyIcon = WPFSystemTray.SetSystemTray(pars, GetList());
+            var curWnd = new WindowInteropHelper(this).Handle;
+            var desktopParent = Win32.FindWindowEx
+                  (Win32.FindWindowEx
+                  (Win32.FindWindow
+                  ("Progman", "Program Manager")
+                  , IntPtr.Zero
+                  , "SHELLDLL_DefView"
+                  , "")
+                  , IntPtr.Zero
+                  , "SysListView32"
+                  , "FolderView");
+            Win32.SetWindowLong(curWnd, Win32.GWL_HWNDPARENT, desktopParent);
+            New();
+            Hide();
         }
 
-        private void OnOptionClick(object sender, RoutedEventArgs e)
+        private void Window_Closed(object sender, EventArgs e)
         {
+            notifyIcon.Visible = false;
         }
 
-        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        public void New()
         {
-            //SYTest
-            m_currentWindow = new WindowInteropHelper(Application.Current.MainWindow).Handle;
-            m_oriParent = GetWindowLong(m_currentWindow, GWL_HWNDPARENT);
-            m_desktopParent = FindWindowEx
-                (FindWindowEx
-                (FindWindow
-                ("Progman", "Program Manager")
-                , IntPtr.Zero
-                , "SHELLDLL_DefView"
-                , "")
-                , IntPtr.Zero
-                , "SysListView32"
-                , "FolderView");
-            SetWindowLong(m_currentWindow, GWL_HWNDPARENT, m_desktopParent);
-        }
-
-        private void OnSettingClick(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void OnNewClick(object sender, RoutedEventArgs e)
-        {
-
+            var wnd = new MemoWindow { Owner = this };
+            wnd.Show();
         }
     }
 }
