@@ -38,7 +38,7 @@ namespace Memo
 
         private void OnNewClick(object sender, EventArgs e)
         {
-            New();
+            NewMemo();
         }
 
         private void OnSettingClick(object sender, EventArgs e)
@@ -66,6 +66,7 @@ namespace Memo
             //系统托盘
             SystemTrayParameter pars = new SystemTrayParameter("../../res/icon.ico", "QC便笺", "", 0, null);
             notifyIcon = WPFSystemTray.SetSystemTray(pars, GetList());
+            //钉在桌面上
             var curWnd = new WindowInteropHelper(this).Handle;
             var desktopParent = Win32.FindWindowEx
                   (Win32.FindWindowEx
@@ -78,7 +79,7 @@ namespace Memo
                   , "SysListView32"
                   , "FolderView");
             Win32.SetWindowLong(curWnd, Win32.GWL_HWNDPARENT, desktopParent);
-            New();
+            NewMemo();
             Hide();
         }
 
@@ -87,7 +88,7 @@ namespace Memo
             notifyIcon.Visible = false;
         }
 
-        public void New()
+        public void NewMemo()
         {
             var wnd = new MemoWindow { Owner = this };
             wnd.Show();

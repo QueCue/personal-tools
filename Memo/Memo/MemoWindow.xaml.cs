@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Memo
@@ -14,7 +15,9 @@ namespace Memo
         public MemoWindow()
         {
             InitializeComponent();
-            MouseLeftButtonDown += (sender, e) => DragMove();
+            //SYTEST
+            OnTopMostClick(null, null);
+            Closed += (sender, e) => Application.Current.Shutdown();
         }
 
         private void OnCloseClick(object sender, RoutedEventArgs e)
@@ -53,7 +56,42 @@ namespace Memo
 
         private void OnNewClick(object sender, RoutedEventArgs e)
         {
-            (m_oriParentWnd as MainWindow).New();
+            (m_oriParentWnd as MainWindow).NewMemo();
+        }
+
+        private void OnTopmostBtnTipOpen(object sender, ToolTipEventArgs e)
+        {
+            if (sender is Button btn)
+            {
+                btn.ToolTip = Topmost ? "取消置顶" : "置顶";
+            }
+        }
+
+        private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+            {
+                WindowState = WindowState == WindowState.Maximized
+                    ? WindowState.Normal : WindowState.Maximized;
+            }
+        }
+
+        private void TitleBar_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton != MouseButtonState.Pressed)
+            {
+                return;
+            }
+
+            if (WindowState != WindowState.Normal)
+            {
+                WindowState = WindowState.Normal;
+                Point mousePos = Mouse.GetPosition(e.Source as FrameworkElement);
+                Left = mousePos.X - Width * 0.5;
+                Top = 0;
+            }
+
+            DragMove();
         }
     }
 }

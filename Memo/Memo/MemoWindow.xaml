@@ -6,18 +6,19 @@
         mc:Ignorable="d" WindowStyle="None" Background="#fff7d1"
         WindowStartupLocation="Manual" ResizeMode="CanResize" AllowsTransparency="False"
         Title="MemoWindow" Height="330" Width="240" Loaded="MemoWindow_OnLoaded"
-        MinWidth="192" MinHeight="100" ShowInTaskbar="False" TextOptions.TextFormattingMode="Display">
+        MinWidth="192" MinHeight="100" ShowInTaskbar="False" TextOptions.TextFormattingMode="Display"
+        BorderBrush="Black" BorderThickness="1" >
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="0" ResizeBorderThickness="5"/>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Border Name="TitleBar" Grid.Row="0" Background="#fff2ab" />
+        <Border Name="TitleBar" Grid.Row="0" Background="#fff2ab" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown" MouseMove="TitleBar_MouseMove"/>
         <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <Button Width="32" Height="32"
+            <Button Width="32" Height="32" ToolTip="新建笔记"
                          Click="OnNewClick" Style="{StaticResource MyButton}" >
                 <Button.Background>
                     <ImageBrush ImageSource="res/new.png" Opacity="0.6" Stretch="None"
@@ -27,13 +28,13 @@
             <TextBlock Text="标题" VerticalAlignment="Center" Margin="0,7,0,6" Height="17"/>
         </StackPanel>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Width="32" Height="32"
+            <Button Width="32" Height="32" ToolTip="菜单"
                          Click="OnOptionClick" Margin="0" Style="{StaticResource MyButton}">
                 <Button.Background>
                     <ImageBrush ImageSource="res/option.png" Opacity="0.6" Stretch="None"/>
                 </Button.Background>
             </Button>
-            <Button Width="32" Height="32"
+            <Button Width="32" Height="32" ToolTipOpening="OnTopmostBtnTipOpen" ToolTip="置顶"
                          Click="OnTopMostClick" Margin="0" Style="{StaticResource MyButton}" RenderTransformOrigin="0.5,0.5">
                 <Button.RenderTransform>
                     <TransformGroup>
@@ -47,7 +48,7 @@
                     <ImageBrush ImageSource="res/pin.png" Opacity="0.6" Stretch="None"/>
                 </Button.Background>
             </Button>
-            <Button Width="32" Height="32"
+            <Button Width="32" Height="32" ToolTip="关闭窗口" 
                          Click="OnCloseClick" Style="{StaticResource MyButton}" >
                 <Button.Background>
                     <ImageBrush ImageSource="res/close.png" Opacity="0.6" Stretch="None"/>
