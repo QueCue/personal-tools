@@ -28,20 +28,16 @@ namespace Memo
         private void OnTopMostClick(object sender, RoutedEventArgs e)
         {
             Topmost = !Topmost;
-            if (sender is Button btn)
+            var tg = m_topmostBtn.RenderTransform as TransformGroup;
+            var tgNew = tg.CloneCurrentValue();
+            if (null != tgNew)
             {
-                var tg = btn.RenderTransform as TransformGroup;
-                var tgNew = tg.CloneCurrentValue();
-                if (null != tgNew)
-                {
-                    RotateTransform rt = tgNew.Children[2] as RotateTransform;
-                    btn.RenderTransformOrigin = new Point(0.5, 0.5);
-                    rt.Angle = Topmost ? 0 : 90;
-                }
-
-                btn.RenderTransform = tgNew;
+                RotateTransform rt = tgNew.Children[2] as RotateTransform;
+                m_topmostBtn.RenderTransformOrigin = new Point(0.5, 0.5);
+                rt.Angle = Topmost ? 0 : 90;
             }
 
+            m_topmostBtn.RenderTransform = tgNew;
             Owner = Topmost ? null : m_oriParentWnd;
         }
 
@@ -61,10 +57,7 @@ namespace Memo
 
         private void OnTopmostBtnTipOpen(object sender, ToolTipEventArgs e)
         {
-            if (sender is Button btn)
-            {
-                btn.ToolTip = Topmost ? "取消置顶" : "置顶";
-            }
+            m_topmostBtn.ToolTip = Topmost ? "取消置顶" : "置顶";
         }
 
         private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

@@ -34,7 +34,7 @@
                     <ImageBrush ImageSource="res/option.png" Opacity="0.6" Stretch="None"/>
                 </Button.Background>
             </Button>
-            <Button Width="32" Height="32" ToolTipOpening="OnTopmostBtnTipOpen" ToolTip="置顶"
+            <Button x:Name="m_topmostBtn" Width="32" Height="32" ToolTipOpening="OnTopmostBtnTipOpen" ToolTip="置顶"
                          Click="OnTopMostClick" Margin="0" Style="{StaticResource MyButton}" RenderTransformOrigin="0.5,0.5">
                 <Button.RenderTransform>
                     <TransformGroup>
