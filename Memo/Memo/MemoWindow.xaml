@@ -7,7 +7,7 @@
         WindowStartupLocation="Manual" ResizeMode="CanResize" AllowsTransparency="False"
         Title="MemoWindow" Height="330" Width="240" Loaded="MemoWindow_OnLoaded"
         MinWidth="192" ShowInTaskbar="False" TextOptions.TextFormattingMode="Display"
-        BorderBrush="Black" BorderThickness="1">
+        BorderBrush="Black" BorderThickness="1" Activated="Window_Activated" Deactivated="Window_Deactivated">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome>
@@ -17,50 +17,52 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Border Name="m_titleBar" Grid.Row="0" Background="#fff2ab" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown"
-                MouseMove="TitleBar_MouseMove" MouseEnter="TitleBar_MouseEnter"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <Button Width="32" Height="32" ToolTip="新建笔记"
+                MouseMove="TitleBar_MouseMove" MouseEnter="TitleBar_MouseEnter">
+            <Grid>
+                <StackPanel Orientation="Horizontal">
+                    <Button Width="32" Height="32" ToolTip="新建笔记"
                     Click="OnNewClick" Style="{StaticResource MyButton}">
-                <Button.Background>
-                    <ImageBrush ImageSource="res/new.png" Opacity="0.6" Stretch="None"
+                        <Button.Background>
+                            <ImageBrush ImageSource="res/new.png" Opacity="0.6" Stretch="None"
                                 Viewport="-0.01,-0.01,1,1" Viewbox="0.01,0.01,1,1" />
-                </Button.Background>
-            </Button>
-            <TextBlock Name="m_titleStr" Text="标题" VerticalAlignment="Center" Margin="0,7,0,6"
+                        </Button.Background>
+                    </Button>
+                    <TextBlock Name="m_titleStr" Text="标题" VerticalAlignment="Center" Margin="0,7,0,6"
                      Height="17" MouseLeftButtonDown="TitleStr_MouseLeftButtonDown" />
-            <TextBox Name="m_titleInput" Text="标题" VerticalContentAlignment="Center" Margin="0,2,0,2"
+                    <TextBox Name="m_titleInput" Text="标题" VerticalContentAlignment="Center" Margin="0,2,0,2"
                      Height="25" MouseLeftButtonDown="TitleStr_MouseLeftButtonDown" LostFocus="TitleInput_LostFocus"
                      Width="105" Visibility="Collapsed" KeyDown="TitleInput_KeyDown" />
-
-        </StackPanel>
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Width="32" Height="32" ToolTip="菜单"
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Width="32" Height="32" ToolTip="菜单"
                     Click="OnOptionClick" Margin="0" Style="{StaticResource MyButton}">
-                <Button.Background>
-                    <ImageBrush ImageSource="res/option.png" Opacity="0.6" Stretch="None" />
-                </Button.Background>
-            </Button>
-            <Button x:Name="m_topmostBtn" Width="32" Height="32" ToolTipOpening="OnTopmostBtnTipOpen" ToolTip="置顶"
+                        <Button.Background>
+                            <ImageBrush ImageSource="res/option.png" Opacity="0.6" Stretch="None" />
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="m_topmostBtn" Width="32" Height="32" ToolTipOpening="OnTopmostBtnTipOpen" ToolTip="置顶"
                     Click="OnTopMostClick" Margin="0" Style="{StaticResource MyButton}" RenderTransformOrigin="0.5,0.5">
-                <Button.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform />
-                        <SkewTransform />
-                        <RotateTransform Angle="90" />
-                        <TranslateTransform />
-                    </TransformGroup>
-                </Button.RenderTransform>
-                <Button.Background>
-                    <ImageBrush ImageSource="res/pin.png" Opacity="0.6" Stretch="None" />
-                </Button.Background>
-            </Button>
-            <Button Width="32" Height="32" ToolTip="关闭窗口"
+                        <Button.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform />
+                                <SkewTransform />
+                                <RotateTransform Angle="90" />
+                                <TranslateTransform />
+                            </TransformGroup>
+                        </Button.RenderTransform>
+                        <Button.Background>
+                            <ImageBrush ImageSource="res/pin.png" Opacity="0.6" Stretch="None" />
+                        </Button.Background>
+                    </Button>
+                    <Button Width="32" Height="32" ToolTip="关闭窗口"
                     Click="OnCloseClick" Style="{StaticResource MyButton}">
-                <Button.Background>
-                    <ImageBrush ImageSource="res/close.png" Opacity="0.6" Stretch="None" />
-                </Button.Background>
-            </Button>
-        </StackPanel>
+                        <Button.Background>
+                            <ImageBrush ImageSource="res/close.png" Opacity="0.6" Stretch="None" />
+                        </Button.Background>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
         <TextBox Grid.Row="1" Margin="10" Text="141223" FontSize="16"
                  Background="Transparent" BorderThickness="0" AcceptsReturn="True"
                  VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" />

@@ -1,7 +1,9 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace Memo
 {
@@ -12,6 +14,8 @@ namespace Memo
     {
         private Window m_oriParentWnd;
         private double m_unfoldWndHeight;
+        private ThicknessAnimation m_titleBarAnim;
+        private readonly static Thickness g_titleNormalMargin = new Thickness(0, 0, 0, 32);
 
         public MemoWindow()
         {
@@ -54,6 +58,8 @@ namespace Memo
         {
             m_oriParentWnd = Owner;
             MinHeight = m_titleBar.ActualHeight + BorderThickness.Top + BorderThickness.Bottom;
+            m_titleBarAnim = new ThicknessAnimation();
+            m_titleBar.Margin = g_titleNormalMargin;
             //SYTEST
             OnTopMostClick(null, null);
             Closed += (sender1, e1) => Application.Current.Shutdown();
@@ -127,6 +133,22 @@ namespace Memo
             {
                 OnTitleInputEnd();
             }
+        }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            m_titleBarAnim.From = m_titleBar.Margin;
+            m_titleBarAnim.To = new Thickness();
+            m_titleBarAnim.Duration = new Duration(TimeSpan.Parse("0:0:0.2"));
+            m_titleBar.BeginAnimation(MarginProperty, m_titleBarAnim);
+        }
+
+        private void Window_Deactivated(object sender, EventArgs e)
+        {
+            m_titleBarAnim.From = m_titleBar.Margin;
+            m_titleBarAnim.To = g_titleNormalMargin;
+            m_titleBarAnim.Duration = new Duration(TimeSpan.Parse("0:0:0.2"));
+            m_titleBar.BeginAnimation(MarginProperty, m_titleBarAnim);
         }
     }
 }
