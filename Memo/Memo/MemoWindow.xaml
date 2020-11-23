@@ -4,7 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" WindowStyle="None" Background="#fff7d1"
-        WindowStartupLocation="Manual" ResizeMode="CanResize" AllowsTransparency="False"
+        WindowStartupLocation="CenterScreen" ResizeMode="CanResize" AllowsTransparency="False"
         Title="MemoWindow" Height="330" Width="240" Loaded="MemoWindow_OnLoaded"
         MinWidth="192" ShowInTaskbar="False" TextOptions.TextFormattingMode="Display"
         BorderBrush="Black" BorderThickness="1" Activated="Window_Activated" Deactivated="Window_Deactivated">
@@ -20,7 +20,7 @@
                 MouseMove="TitleBar_MouseMove" MouseEnter="TitleBar_MouseEnter">
             <Grid>
                 <StackPanel Orientation="Horizontal">
-                    <Button Width="32" Height="32" ToolTip="新建笔记"
+                    <Button Name="m_newBtn" Width="32" Height="32" ToolTip="新建笔记"
                     Click="OnNewClick" Style="{StaticResource MyButton}">
                         <Button.Background>
                             <ImageBrush ImageSource="res/new.png" Opacity="0.6" Stretch="None"
@@ -34,7 +34,7 @@
                      Width="105" Visibility="Collapsed" KeyDown="TitleInput_KeyDown" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Width="32" Height="32" ToolTip="菜单"
+                    <Button Name="m_optionBtn" Width="32" Height="32" ToolTip="菜单"
                     Click="OnOptionClick" Margin="0" Style="{StaticResource MyButton}">
                         <Button.Background>
                             <ImageBrush ImageSource="res/option.png" Opacity="0.6" Stretch="None" />
@@ -54,7 +54,7 @@
                             <ImageBrush ImageSource="res/pin.png" Opacity="0.6" Stretch="None" />
                         </Button.Background>
                     </Button>
-                    <Button Width="32" Height="32" ToolTip="关闭窗口"
+                    <Button Name="m_closeBtn" Width="32" Height="32" ToolTip="关闭窗口"
                     Click="OnCloseClick" Style="{StaticResource MyButton}">
                         <Button.Background>
                             <ImageBrush ImageSource="res/close.png" Opacity="0.6" Stretch="None" />
@@ -63,7 +63,7 @@
                 </StackPanel>
             </Grid>
         </Border>
-        <TextBox Grid.Row="1" Margin="10" Text="141223" FontSize="16"
+        <TextBox Name="m_mainInput" Grid.Row="1" Margin="10" Text="141223" FontSize="16"
                  Background="Transparent" BorderThickness="0" AcceptsReturn="True"
                  VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" />
         <!--<RichTextBox Grid.Row="1"  >
@@ -73,5 +73,10 @@
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>-->
+        <!--<Border Name="m_optionMenu" Grid.Row="0" Grid.RowSpan="2" Background="White" VerticalAlignment="Top" Height="150">
+            <Border.Effect>
+                <DropShadowEffect Direction="270" ShadowDepth="0" Color="Gray" BlurRadius="20"/>
+            </Border.Effect>
+        </Border>-->
     </Grid>
 </Window>
