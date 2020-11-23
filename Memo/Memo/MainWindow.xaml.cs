@@ -1,9 +1,10 @@
-﻿using Memo.tools;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
+using Memo.tools;
+using Application = System.Windows.Application;
 
 namespace Memo
 {
@@ -17,18 +18,52 @@ namespace Memo
             InitializeComponent();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //系统托盘
+            var pars = new SystemTrayParameter("../../res/icon.ico", "QC便笺", "", 0, null);
+            m_notifyIcon = WPFSystemTray.SetSystemTray(pars, GetList());
+            //钉在桌面上
+            IntPtr curWnd = new WindowInteropHelper(this).Handle;
+            IntPtr desktopParent = Win32.FindWindowEx
+            (Win32.FindWindowEx
+                (Win32.FindWindow
+                        ("Progman", "Program Manager")
+                    , IntPtr.Zero
+                    , "SHELLDLL_DefView"
+                    , "")
+                , IntPtr.Zero
+                , "SysListView32"
+                , "FolderView");
+            Win32.SetWindowLong(curWnd, Win32.GwlHwndparent, desktopParent);
+            NewMemo();
+            Hide();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            m_notifyIcon.Visible = false;
+        }
+
+        public void NewMemo()
+        {
+            var wnd = new MemoWindow {Owner = this};
+            wnd.Show();
+        }
+
         #region 系统托盘
-        NotifyIcon notifyIcon;
+
+        private NotifyIcon m_notifyIcon;
 
         //托盘右键菜单集合
         private List<SystemTrayMenu> GetList()
         {
-            List<SystemTrayMenu> ls = new List<SystemTrayMenu>
+            var ls = new List<SystemTrayMenu>
             {
-                new SystemTrayMenu() { Txt = "新建", Click = OnNewClick },
-                new SystemTrayMenu() { Txt = "设置", Icon = "../../res/setting.png", Click = OnSettingClick },
-                new SystemTrayMenu() { Txt = "关于", Click = OnAboutClick },
-                new SystemTrayMenu() { Txt = "退出", Click = OnExitClick }
+                new SystemTrayMenu {Txt = "新建", Click = OnNewClick},
+                new SystemTrayMenu {Txt = "设置", Icon = "../../res/setting.png", Click = OnSettingClick},
+                new SystemTrayMenu {Txt = "关于", Click = OnAboutClick},
+                new SystemTrayMenu {Txt = "退出", Click = OnExitClick}
             };
 
             return ls;
@@ -41,57 +76,18 @@ namespace Memo
             NewMemo();
         }
 
-        private void OnSettingClick(object sender, EventArgs e)
-        {
+        private void OnSettingClick(object sender, EventArgs e) { }
 
-        }
-
-        private void OnAboutClick(object sender, EventArgs e)
-        {
-
-        }
+        private void OnAboutClick(object sender, EventArgs e) { }
 
         private void OnExitClick(object sender, EventArgs e)
         {
             Close();
-            System.Windows.Application.Current.Shutdown();
+            Application.Current.Shutdown();
         }
 
         #endregion
 
         #endregion
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            //系统托盘
-            SystemTrayParameter pars = new SystemTrayParameter("../../res/icon.ico", "QC便笺", "", 0, null);
-            notifyIcon = WPFSystemTray.SetSystemTray(pars, GetList());
-            //钉在桌面上
-            var curWnd = new WindowInteropHelper(this).Handle;
-            var desktopParent = Win32.FindWindowEx
-                  (Win32.FindWindowEx
-                  (Win32.FindWindow
-                  ("Progman", "Program Manager")
-                  , IntPtr.Zero
-                  , "SHELLDLL_DefView"
-                  , "")
-                  , IntPtr.Zero
-                  , "SysListView32"
-                  , "FolderView");
-            Win32.SetWindowLong(curWnd, Win32.GWL_HWNDPARENT, desktopParent);
-            NewMemo();
-            Hide();
-        }
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            notifyIcon.Visible = false;
-        }
-
-        public void NewMemo()
-        {
-            var wnd = new MemoWindow { Owner = this };
-            wnd.Show();
-        }
     }
 }

@@ -5,7 +5,7 @@ namespace Memo
 {
     class Win32
     {
-        public const int GWL_HWNDPARENT = -8;
+        public const int GwlHwndparent = -8;
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetWindowLong(IntPtr hWnd, int nIndex);
@@ -17,7 +17,8 @@ namespace Memo
         public static extern IntPtr FindWindow(string lpWindowClass, string lpWindowName);
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string className, string windowTitle);
+        public static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string className,
+            string windowTitle);
 
         [DllImport("user32.dll")]
         public static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
