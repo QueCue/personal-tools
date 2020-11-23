@@ -6,7 +6,7 @@
         mc:Ignorable="d" WindowStyle="None" Background="#fff7d1"
         WindowStartupLocation="Manual" ResizeMode="CanResize" AllowsTransparency="False"
         Title="MemoWindow" Height="330" Width="240" Loaded="MemoWindow_OnLoaded"
-        MinWidth="192" MinHeight="100" ShowInTaskbar="False" TextOptions.TextFormattingMode="Display"
+        MinWidth="192" ShowInTaskbar="False" TextOptions.TextFormattingMode="Display"
         BorderBrush="Black" BorderThickness="1">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" ResizeBorderThickness="5" />
@@ -17,7 +17,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Border Name="m_titleBar" Grid.Row="0" Background="#fff2ab" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown"
-                MouseMove="TitleBar_MouseMove" />
+                MouseMove="TitleBar_MouseMove" MouseEnter="TitleBar_MouseEnter"/>
         <StackPanel Orientation="Horizontal" Grid.Row="0">
             <Button Width="32" Height="32" ToolTip="新建笔记"
                     Click="OnNewClick" Style="{StaticResource MyButton}">
@@ -26,7 +26,12 @@
                                 Viewport="-0.01,-0.01,1,1" Viewbox="0.01,0.01,1,1" />
                 </Button.Background>
             </Button>
-            <TextBlock Text="标题" VerticalAlignment="Center" Margin="0,7,0,6" Height="17" />
+            <TextBlock Name="m_titleStr" Text="标题" VerticalAlignment="Center" Margin="0,7,0,6"
+                     Height="17" MouseLeftButtonDown="TitleStr_MouseLeftButtonDown" />
+            <TextBox Name="m_titleInput" Text="标题" VerticalContentAlignment="Center" Margin="0,2,0,2"
+                     Height="25" MouseLeftButtonDown="TitleStr_MouseLeftButtonDown" LostFocus="TitleInput_LostFocus"
+                     Width="105" Visibility="Collapsed" KeyDown="TitleInput_KeyDown" />
+
         </StackPanel>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Width="32" Height="32" ToolTip="菜单"

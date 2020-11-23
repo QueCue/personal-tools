@@ -11,13 +11,18 @@ namespace Memo
     public partial class MemoWindow : Window
     {
         private Window m_oriParentWnd;
+        private double m_unfoldWndHeight;
 
         public MemoWindow()
         {
             InitializeComponent();
-            //SYTEST
-            OnTopMostClick(null, null);
-            Closed += (sender, e) => Application.Current.Shutdown();
+        }
+
+        private void OnTitleInputEnd()
+        {
+            m_titleStr.Visibility = Visibility.Visible;
+            m_titleInput.Visibility = Visibility.Collapsed;
+            m_titleStr.Text = m_titleInput.Text;
         }
 
         private void OnCloseClick(object sender, RoutedEventArgs e)
@@ -48,6 +53,10 @@ namespace Memo
         private void MemoWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
             m_oriParentWnd = Owner;
+            MinHeight = m_titleBar.ActualHeight + BorderThickness.Top + BorderThickness.Bottom;
+            //SYTEST
+            OnTopMostClick(null, null);
+            Closed += (sender1, e1) => Application.Current.Shutdown();
         }
 
         private void OnNewClick(object sender, RoutedEventArgs e)
@@ -64,8 +73,15 @@ namespace Memo
         {
             if (e.ClickCount == 2)
             {
-                WindowState = WindowState == WindowState.Maximized
-                    ? WindowState.Normal : WindowState.Maximized;
+                if (Height == MinHeight)
+                {
+                    Height = m_unfoldWndHeight;
+                }
+                else
+                {
+                    m_unfoldWndHeight = Height;
+                    Height = MinHeight;
+                }
             }
         }
 
@@ -76,15 +92,41 @@ namespace Memo
                 return;
             }
 
-            if (WindowState != WindowState.Normal)
-            {
-                WindowState = WindowState.Normal;
-                Point mousePos = Mouse.GetPosition(e.Source as FrameworkElement);
-                Left = mousePos.X - Width * 0.5;
-                Top = 0;
-            }
-
+            ResizeMode = ResizeMode.NoResize;
             DragMove();
+            if (e.LeftButton == MouseButtonState.Released)
+            {
+                if (ResizeMode == ResizeMode.NoResize)
+                {
+                    ResizeMode = ResizeMode.CanResize;
+                }
+            }
+        }
+
+        private void TitleStr_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            m_titleStr.Visibility = Visibility.Collapsed;
+            m_titleInput.Visibility = Visibility.Visible;
+            m_titleInput.Text = m_titleStr.Text;
+            m_titleInput.Focus();
+        }
+
+        private void TitleBar_MouseEnter(object sender, MouseEventArgs e)
+        {
+            m_titleBar.Cursor = Cursors.SizeAll;
+        }
+
+        private void TitleInput_LostFocus(object sender, RoutedEventArgs e)
+        {
+            OnTitleInputEnd();
+        }
+
+        private void TitleInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                OnTitleInputEnd();
+            }
         }
     }
 }
