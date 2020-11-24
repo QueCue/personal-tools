@@ -13,7 +13,7 @@ namespace Memo.tools
             }
             catch (Exception)
             {
-                return Colors.White;
+                return Colors.Black;
             }
         }
     }

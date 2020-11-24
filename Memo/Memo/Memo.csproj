@@ -37,6 +37,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LitJson">
+      <HintPath>lib\LitJson.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -59,7 +62,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Theme.cs" />
+    <Compile Include="ColorRadioButton.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="tools\JsonHelper.cs" />
     <Compile Include="tools\Tools.cs" />
     <Compile Include="OptionWindow.xaml.cs">
       <DependentUpon>OptionWindow.xaml</DependentUpon>
@@ -123,12 +128,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="res\new.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\SYControlLibrary\SYControlLibrary.csproj">
-      <Project>{a59c5549-cc58-4f40-9f38-5fd15bfc8994}</Project>
-      <Name>SYControlLibrary</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="res\close.png" />

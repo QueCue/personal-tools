@@ -1,10 +1,8 @@
 ﻿using Memo.tools;
-using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace Memo
 {
@@ -13,52 +11,44 @@ namespace Memo
     /// </summary>
     public partial class OptionWindow : Window
     {
+        private MemoWindow m_memoWnd;
+        private Dictionary<uint, ColorRadioButton> m_radioBtnMap
+            = new Dictionary<uint, ColorRadioButton>();
+
+
         public OptionWindow()
         {
             InitializeComponent();
+            InitColorPanel();
+        }
+
+        private void InitChecked()
+        {
+            if (!m_radioBtnMap.TryGetValue(m_memoWnd.ThemeId, out ColorRadioButton btn))
+            {
+                return;
+            }
+
+            btn.IsChecked = true;
         }
 
         private void InitColorPanel()
         {
             m_colorPanel.Children.Clear();
-            double itemWidth = m_colorPanel.Width / Theme.ColorInfos.Count;
-            foreach (var info in Theme.ColorInfos)
+            double itemWidth = m_colorPanel.Width / Global.ColorInfos.Count;
+            foreach (var info in Global.ColorInfos)
             {
-                //string path = "pack://application:,,,/Memo;component/res/selected.png";
-                //Uri uri = new Uri(path);
-                //ImageSource source = new BitmapImage(uri);
-                //Image img = new Image
-                //{
-                //    Source = source,
-                //    Margin = new Thickness(16),
-                //    Visibility = Visibility.Hidden,
-                //    Stretch = Stretch.None,
-                //};
-
-
-
-                //Button button = new Button
-                //{
-                //    Style = TryFindResource("MyButton") as Style,
-                //    Background = new SolidColorBrush(Tools.ColorFromString(info.DisplayColor)),
-                //    ToolTip = info.Desc,
-                //    Width = itemWidth,
-                //    Content = img,
-                //    DataContext = info
-                //};
-
-                //button.Click += OnColorClick;
-                //m_colorPanel.Children.Add(button);
-
-                RadioButton btn = new RadioButton
+                ColorRadioButton btn = new ColorRadioButton
                 {
                     Style = TryFindResource("RadioThemeColor") as Style,
                     Background = new SolidColorBrush(Tools.ColorFromString(info.DisplayColor)),
                     ToolTip = info.Desc,
                     Width = itemWidth,
-                    DataContext = info
+                    DataContext = info,
+                    MarkStroke = info.IsDark ? Brushes.White : Brushes.Black,
                 };
 
+                m_radioBtnMap.Add(info.Id, btn);
                 btn.Click += OnColorClick;
                 m_colorPanel.Children.Add(btn);
             }
@@ -72,25 +62,28 @@ namespace Memo
             }
 
             ThemeInfo info = btn.DataContext as ThemeInfo;
-            MemoWindow memoWnd = Owner as MemoWindow;
-            if (memoWnd.ThemeId.Equals(info.Guid))
+            if (m_memoWnd.ThemeId == info.Id)
             {
                 return;
             }
 
-            memoWnd.SetTheme(info);
-            //(btn.Content as Image).Visibility = Visibility.Visible;
-            //Close();
+            m_memoWnd.SetTheme(info);
+            Hide();
         }
 
-        private void OnNewClick(object sender, RoutedEventArgs e)
+        private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            InitColorPanel();
+            bool isShow = (bool)e.NewValue;
+            if (isShow)
+            {
+                m_memoWnd = Owner as MemoWindow;
+                InitChecked();
+            }
+            else
+            {
+                m_memoWnd = null;
+                Owner = null;
+            }
         }
     }
 }

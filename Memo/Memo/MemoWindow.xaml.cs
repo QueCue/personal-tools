@@ -15,14 +15,14 @@ namespace Memo
     /// </summary>
     public partial class MemoWindow : Window
     {
-        public string ThemeId { get; private set; }
+        public uint ThemeId { get; private set; }
 
         private Window m_oriParentWnd;
         private double m_unfoldWndHeight;
         private ThicknessAnimation m_thicknessAnim;
         private Button[] m_btnsNeedChangeColor;
 
-        private readonly static Thickness g_titleNormalMargin = new Thickness(0, 0, 0, 32);
+        private static readonly Thickness g_titleNormalMargin = new Thickness(0, 0, 0, 32);
         private static Dictionary<Button, ImageSource> g_btnToImgBlackMap
             = new Dictionary<Button, ImageSource>();
         private static Dictionary<Button, ImageSource> g_btnToImgWhiteMap
@@ -30,6 +30,7 @@ namespace Memo
 
         public MemoWindow()
         {
+            DataContext = this;
             InitializeComponent();
         }
 
@@ -40,7 +41,7 @@ namespace Memo
                 return;
             }
 
-            ThemeId = info.Guid;
+            ThemeId = info.Id;
             m_titleBar.Background = new SolidColorBrush(Tools.ColorFromString(info.TitleBarColor));
             Background = new SolidColorBrush(Tools.ColorFromString(info.BgColor));
             Foreground = new SolidColorBrush(info.IsDark ? Colors.White : Colors.Black);
@@ -56,12 +57,12 @@ namespace Memo
             Dictionary<Button, ImageSource> map = isDark ? g_btnToImgWhiteMap : g_btnToImgBlackMap;
             if (map.TryGetValue(btn, out ImageSource source))
             {
-                (btn.Background as ImageBrush).ImageSource = source;
-                (btn.Background as ImageBrush).Opacity = isDark ? 1 : 0.6;
+                ((ImageBrush)btn.Background).ImageSource = source;
+                ((ImageBrush)btn.Background).Opacity = isDark ? 1 : 0.6;
                 return;
             }
 
-            BitmapImage bi = new BitmapImage(new Uri((btn.Background as ImageBrush).ImageSource.ToString()));
+            BitmapImage bi = new BitmapImage(new Uri(((ImageBrush)btn.Background).ImageSource.ToString()));
             var formatConvertedBitmap = new FormatConvertedBitmap();
             formatConvertedBitmap.BeginInit();
             formatConvertedBitmap.Source = bi;
@@ -73,12 +74,16 @@ namespace Memo
                 * writeableBitmap.PixelHeight
                 * writeableBitmap.Format.BitsPerPixel / 8;
             var backBuffer = (byte*)writeableBitmap.BackBuffer;
+            if (null == backBuffer)
+            {
+                return;
+            }
+
             for (int i = 0; i < length; i += 4)
             {
                 var blue = backBuffer[i];
                 var green = backBuffer[i + 1];
                 var red = backBuffer[i + 2];
-                var alpha = backBuffer[i + 3];
                 if (0 == blue
                     && 0 == green
                     && 0 == red)
@@ -96,8 +101,8 @@ namespace Memo
             writeableBitmap.AddDirtyRect(new Int32Rect(0, 0, writeableBitmap.PixelWidth, writeableBitmap.PixelHeight));
             writeableBitmap.Unlock();
             map.Add(btn, writeableBitmap);
-            (btn.Background as ImageBrush).ImageSource = writeableBitmap;
-            (btn.Background as ImageBrush).Opacity = isDark ? 1 : 0.6;
+            ((ImageBrush)btn.Background).ImageSource = writeableBitmap;
+            ((ImageBrush)btn.Background).Opacity = isDark ? 1 : 0.6;
         }
 
         private void OnTitleInputEnd()
@@ -105,6 +110,7 @@ namespace Memo
             m_titleStr.Visibility = Visibility.Visible;
             m_titleInput.Visibility = Visibility.Collapsed;
             m_titleStr.Text = m_titleInput.Text;
+            Name = m_titleStr.Text;
         }
 
         private void OnCloseClick(object sender, RoutedEventArgs e)
@@ -116,12 +122,14 @@ namespace Memo
         {
             Topmost = !Topmost;
             var tg = m_topmostBtn.RenderTransform as TransformGroup;
-            var tgNew = tg.CloneCurrentValue();
+            var tgNew = tg?.CloneCurrentValue();
             if (null != tgNew)
             {
-                RotateTransform rt = tgNew.Children[2] as RotateTransform;
                 m_topmostBtn.RenderTransformOrigin = new Point(0.5, 0.5);
-                rt.Angle = Topmost ? 0 : 90;
+                if (tgNew.Children[2] is RotateTransform rt)
+                {
+                    rt.Angle = Topmost ? 0 : 90;
+                }
             }
 
             m_topmostBtn.RenderTransform = tgNew;
@@ -130,24 +138,25 @@ namespace Memo
 
         private void OnOptionClick(object sender, RoutedEventArgs e)
         {
-            var wnd = new OptionWindow() { Owner = this };
+            var wnd = Global.OptionWnd;
+            wnd.Owner = this;
             wnd.Show();
         }
 
         private void MemoWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
             m_oriParentWnd = Owner;
-            ThemeId = Theme.Default.Guid;
+            ThemeId = Global.Default.Id;
             MinHeight = m_titleBar.ActualHeight + BorderThickness.Top + BorderThickness.Bottom;
             m_thicknessAnim = new ThicknessAnimation();
             m_titleBar.Margin = g_titleNormalMargin;
-            m_btnsNeedChangeColor = new Button[] { m_newBtn, m_optionBtn, m_topmostBtn, m_closeBtn };
+            m_btnsNeedChangeColor = new[] { m_newBtn, m_optionBtn, m_topmostBtn, m_closeBtn };
             if (null == g_btnToImgBlackMap
                 || g_btnToImgBlackMap.Count <= 0)
             {
                 foreach (var btn in m_btnsNeedChangeColor)
                 {
-                    g_btnToImgBlackMap.Add(btn, (btn.Background as ImageBrush).ImageSource);
+                    g_btnToImgBlackMap?.Add(btn, ((ImageBrush)btn.Background).ImageSource);
                 }
             }
 
@@ -158,7 +167,7 @@ namespace Memo
 
         private void OnNewClick(object sender, RoutedEventArgs e)
         {
-            (m_oriParentWnd as MainWindow).NewMemo();
+            ((MainWindow)m_oriParentWnd).NewMemo();
         }
 
         private void OnTopmostBtnTipOpen(object sender, ToolTipEventArgs e)
@@ -180,11 +189,9 @@ namespace Memo
                     Height = MinHeight;
                 }
             }
-        }
 
-        private void TitleBar_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton != MouseButtonState.Pressed)
+            if (e.LeftButton != MouseButtonState.Pressed
+                || sender != e.Source)
             {
                 return;
             }
@@ -206,11 +213,6 @@ namespace Memo
             m_titleInput.Visibility = Visibility.Visible;
             m_titleInput.Text = m_titleStr.Text;
             m_titleInput.Focus();
-        }
-
-        private void TitleBar_MouseEnter(object sender, MouseEventArgs e)
-        {
-            m_titleBar.Cursor = Cursors.SizeAll;
         }
 
         private void TitleInput_LostFocus(object sender, RoutedEventArgs e)

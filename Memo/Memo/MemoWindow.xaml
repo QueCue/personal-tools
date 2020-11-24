@@ -16,8 +16,8 @@
             <RowDefinition Height="32" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border Name="m_titleBar" Grid.Row="0" Background="#fff2ab" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown"
-                MouseMove="TitleBar_MouseMove" MouseEnter="TitleBar_MouseEnter">
+        <Border Name="m_titleBar" Grid.Row="0" Background="#fff2ab"
+                MouseLeftButtonDown="TitleBar_MouseLeftButtonDown" Cursor="SizeAll">
             <Grid>
                 <StackPanel Orientation="Horizontal">
                     <Button Name="m_newBtn" Width="32" Height="32" ToolTip="新建笔记"
@@ -27,7 +27,7 @@
                                 Viewport="-0.01,-0.01,1,1" Viewbox="0.01,0.01,1,1" />
                         </Button.Background>
                     </Button>
-                    <TextBlock Name="m_titleStr" Text="标题" VerticalAlignment="Center" Margin="0,7,0,6"
+                    <TextBlock Name="m_titleStr" Text="标题" VerticalAlignment="Center" Margin="0,7,0,6" Cursor="Arrow"
                      Height="17" MouseLeftButtonDown="TitleStr_MouseLeftButtonDown" />
                     <TextBox Name="m_titleInput" Text="标题" VerticalContentAlignment="Center" Margin="0,2,0,2"
                      Height="25" MouseLeftButtonDown="TitleStr_MouseLeftButtonDown" LostFocus="TitleInput_LostFocus"
@@ -63,7 +63,7 @@
                 </StackPanel>
             </Grid>
         </Border>
-        <TextBox Name="m_mainInput" Grid.Row="1" Margin="10" Text="141223" FontSize="16"
+        <TextBox Name="m_mainInput" Grid.Row="1" Margin="10" Text="asfasfsf" FontSize="16"
                  Background="Transparent" BorderThickness="0" AcceptsReturn="True"
                  VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" />
         <!--<RichTextBox Grid.Row="1"  >
