@@ -23,10 +23,10 @@ namespace Memo
         private Button[] m_btnsNeedChangeColor;
 
         private static readonly Thickness g_titleNormalMargin = new Thickness(0, 0, 0, 32);
-        private static Dictionary<Button, ImageSource> g_btnToImgBlackMap
-            = new Dictionary<Button, ImageSource>();
-        private static Dictionary<Button, ImageSource> g_btnToImgWhiteMap
-            = new Dictionary<Button, ImageSource>();
+        private static Dictionary<string, ImageSource> g_btnToImgBlackMap
+            = new Dictionary<string, ImageSource>();
+        private static Dictionary<string, ImageSource> g_btnToImgWhiteMap
+            = new Dictionary<string, ImageSource>();
 
         public MemoWindow()
         {
@@ -41,9 +41,15 @@ namespace Memo
                 return;
             }
 
+            ThemeInfo preInfo = Global.GetThemeInfo(ThemeId);
             ThemeId = info.Id;
             m_titleBar.Background = new SolidColorBrush(Tools.ColorFromString(info.TitleBarColor));
             Background = new SolidColorBrush(Tools.ColorFromString(info.BgColor));
+            if (info.IsDark == preInfo.IsDark)
+            {
+                return;
+            }
+
             Foreground = new SolidColorBrush(info.IsDark ? Colors.White : Colors.Black);
             m_mainInput.Foreground = Foreground;
             foreach (var btn in m_btnsNeedChangeColor)
@@ -54,8 +60,8 @@ namespace Memo
 
         private unsafe void ChangeBtnColor(Button btn, bool isDark)
         {
-            Dictionary<Button, ImageSource> map = isDark ? g_btnToImgWhiteMap : g_btnToImgBlackMap;
-            if (map.TryGetValue(btn, out ImageSource source))
+            Dictionary<string, ImageSource> map = isDark ? g_btnToImgWhiteMap : g_btnToImgBlackMap;
+            if (map.TryGetValue(btn.Name, out ImageSource source))
             {
                 ((ImageBrush)btn.Background).ImageSource = source;
                 ((ImageBrush)btn.Background).Opacity = isDark ? 1 : 0.6;
@@ -100,7 +106,7 @@ namespace Memo
 
             writeableBitmap.AddDirtyRect(new Int32Rect(0, 0, writeableBitmap.PixelWidth, writeableBitmap.PixelHeight));
             writeableBitmap.Unlock();
-            map.Add(btn, writeableBitmap);
+            map.Add(btn.Name, writeableBitmap);
             ((ImageBrush)btn.Background).ImageSource = writeableBitmap;
             ((ImageBrush)btn.Background).Opacity = isDark ? 1 : 0.6;
         }
@@ -156,7 +162,7 @@ namespace Memo
             {
                 foreach (var btn in m_btnsNeedChangeColor)
                 {
-                    g_btnToImgBlackMap?.Add(btn, ((ImageBrush)btn.Background).ImageSource);
+                    g_btnToImgBlackMap?.Add(btn.Name, ((ImageBrush)btn.Background).ImageSource);
                 }
             }
 

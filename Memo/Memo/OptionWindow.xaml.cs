@@ -62,12 +62,11 @@ namespace Memo
             }
 
             ThemeInfo info = btn.DataContext as ThemeInfo;
-            if (m_memoWnd.ThemeId == info.Id)
+            if (m_memoWnd.ThemeId != info.Id)
             {
-                return;
+                m_memoWnd.SetTheme(info);
             }
 
-            m_memoWnd.SetTheme(info);
             Hide();
         }
 
