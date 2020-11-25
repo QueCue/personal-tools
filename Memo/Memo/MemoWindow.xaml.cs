@@ -15,18 +15,21 @@ namespace Memo
     /// </summary>
     public partial class MemoWindow : Window
     {
-        public uint ThemeId { get; private set; }
+        private static readonly Thickness g_titleNormalMargin = new Thickness(0, 0, 0, 32);
+        private static readonly double g_optionCtrlAutoWidthLimit = 400;
+        private static readonly double g_optionCtrlFixedWidth = 290;
 
         private Window m_oriParentWnd;
         private double m_unfoldWndHeight;
         private ThicknessAnimation m_thicknessAnim;
         private Button[] m_btnsNeedChangeColor;
 
-        private static readonly Thickness g_titleNormalMargin = new Thickness(0, 0, 0, 32);
         private static Dictionary<string, ImageSource> g_btnToImgBlackMap
             = new Dictionary<string, ImageSource>();
         private static Dictionary<string, ImageSource> g_btnToImgWhiteMap
             = new Dictionary<string, ImageSource>();
+
+        public uint ThemeId { get; private set; }
 
         public MemoWindow()
         {
@@ -119,6 +122,22 @@ namespace Memo
             Name = m_titleStr.Text;
         }
 
+        private void ShowOption()
+        {
+            var ctrl = Global.OptionCtrl;
+            ctrl.DataContext = this;
+            m_grid.Children.Add(ctrl);
+            Grid.SetRow(ctrl, 0);
+            Grid.SetRowSpan(ctrl, 2);
+        }
+
+        private void HideOption()
+        {
+            var ctrl = Global.OptionCtrl;
+            ctrl.Visibility = Visibility.Hidden;
+            m_grid.Children.Remove(ctrl);
+        }
+
         private void OnCloseClick(object sender, RoutedEventArgs e)
         {
             Close();
@@ -132,7 +151,7 @@ namespace Memo
             if (null != tgNew)
             {
                 m_topmostBtn.RenderTransformOrigin = new Point(0.5, 0.5);
-                if (tgNew.Children[2] is RotateTransform rt)
+                if (tgNew.Children[0] is RotateTransform rt)
                 {
                     rt.Angle = Topmost ? 0 : 90;
                 }
@@ -144,9 +163,12 @@ namespace Memo
 
         private void OnOptionClick(object sender, RoutedEventArgs e)
         {
-            var wnd = Global.OptionWnd;
-            wnd.Owner = this;
-            wnd.Show();
+            var ctrl = Global.OptionCtrl;
+            ctrl.DataContext = this;
+            (Content as Grid).Children.Add(ctrl);
+            Grid.SetRow(ctrl, 0);
+            Grid.SetRowSpan(ctrl, 2);
+            m_mask.Visibility = Visibility.Visible;
         }
 
         private void MemoWindow_OnLoaded(object sender, RoutedEventArgs e)
@@ -248,6 +270,25 @@ namespace Memo
             m_thicknessAnim.To = g_titleNormalMargin;
             m_thicknessAnim.Duration = new Duration(TimeSpan.Parse("0:0:0.2"));
             m_titleBar.BeginAnimation(MarginProperty, m_thicknessAnim);
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            //if (e.NewSize.Width > g_optionCtrlAutoWidthLimit)
+            //{
+            //    m_optionCtrl.Width = g_optionCtrlFixedWidth;
+            //    m_optionCtrl.HorizontalAlignment = HorizontalAlignment.Right;
+            //}
+            //else
+            //{
+            //    m_optionCtrl.Width = double.NaN;
+            //    m_optionCtrl.HorizontalAlignment = HorizontalAlignment.Stretch;
+            //}
+        }
+
+        private void Mask_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            m_mask.Visibility = Visibility.Hidden;
         }
     }
 }

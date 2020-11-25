@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" WindowStyle="None" ResizeMode="NoResize" BorderThickness="1"
-        Title="OptionWindow" Height="450" Width="315" ShowInTaskbar="False"
+        Title="OptionWindow" Height="166.5" Width="315" ShowInTaskbar="False"
         IsVisibleChanged="Window_IsVisibleChanged">
     <Grid>
         <StackPanel Orientation="Vertical">

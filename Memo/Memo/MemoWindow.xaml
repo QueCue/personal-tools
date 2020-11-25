@@ -2,16 +2,17 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:memo="clr-namespace:Memo"
         mc:Ignorable="d" WindowStyle="None" Background="#fff7d1"
         WindowStartupLocation="CenterScreen" ResizeMode="CanResize" AllowsTransparency="False"
         Title="MemoWindow" Height="330" Width="240" Loaded="MemoWindow_OnLoaded"
         MinWidth="192" ShowInTaskbar="False" TextOptions.TextFormattingMode="Display"
-        BorderBrush="Black" BorderThickness="1" Activated="Window_Activated" Deactivated="Window_Deactivated">
+        BorderBrush="Black" BorderThickness="1" Activated="Window_Activated" Deactivated="Window_Deactivated"
+        SizeChanged="Window_SizeChanged">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome>
-    <Grid>
+    <Grid Name="m_grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="32" />
             <RowDefinition Height="*" />
@@ -44,10 +45,7 @@
                     Click="OnTopMostClick" Margin="0" Style="{StaticResource MyButton}" RenderTransformOrigin="0.5,0.5">
                         <Button.RenderTransform>
                             <TransformGroup>
-                                <ScaleTransform />
-                                <SkewTransform />
                                 <RotateTransform Angle="90" />
-                                <TranslateTransform />
                             </TransformGroup>
                         </Button.RenderTransform>
                         <Button.Background>
@@ -66,17 +64,7 @@
         <TextBox Name="m_mainInput" Grid.Row="1" Margin="10" Text="asfasfsf" FontSize="16"
                  Background="Transparent" BorderThickness="0" AcceptsReturn="True"
                  VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" />
-        <!--<RichTextBox Grid.Row="1"  >
-            <FlowDocument>
-                <Paragraph>
-                    <Run Text="按时发顺丰"/>
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>-->
-        <!--<Border Name="m_optionMenu" Grid.Row="0" Grid.RowSpan="2" Background="White" VerticalAlignment="Top" Height="150">
-            <Border.Effect>
-                <DropShadowEffect Direction="270" ShadowDepth="0" Color="Gray" BlurRadius="20"/>
-            </Border.Effect>
-        </Border>-->
+        <Border Name="m_mask" Background="Transparent" Grid.RowSpan="2"
+                Visibility="Hidden" MouseDown="Mask_MouseDown"/>
     </Grid>
 </Window>

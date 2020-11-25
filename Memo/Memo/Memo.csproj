@@ -64,6 +64,10 @@
     </ApplicationDefinition>
     <Compile Include="ColorRadioButton.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="MemoData.cs" />
+    <Compile Include="OptionControl.xaml.cs">
+      <DependentUpon>OptionControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="tools\JsonHelper.cs" />
     <Compile Include="tools\Tools.cs" />
     <Compile Include="OptionWindow.xaml.cs">
@@ -89,6 +93,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MyResourceDict.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OptionControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

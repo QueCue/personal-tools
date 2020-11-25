@@ -1,7 +1,6 @@
 ﻿using LitJson;
 using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -36,7 +35,7 @@ namespace Memo.tools
         {
             if (!File.Exists(fullPath))
             {
-                return default(T);
+                return default;
             }
 
             s_TempPath = fullPath;
@@ -51,9 +50,10 @@ namespace Memo.tools
                 return;
             }
 
-            string json = JsonMapper.ToJson(obj);
-            json = JsonTree(json);
-            WriteStringToFile(path, json);
+            StringBuilder sb = new StringBuilder();
+            JsonWriter jw = new JsonWriter(sb) { PrettyPrint = true };
+            JsonMapper.ToJson(obj, jw);
+            WriteStringToFile(path, Regex.Unescape(sb.ToString()));
         }
 
         public static void WriteJson(string path, JsonData objData)
@@ -63,66 +63,10 @@ namespace Memo.tools
                 return;
             }
 
-            string json = objData.ToJson();
-            json = JsonTree(json);
-            WriteStringToFile(path, json);
-        }
-
-        /// <summary>
-        /// JSON字符串格式化
-        /// </summary>
-        /// <param name="json"></param>
-        /// <returns></returns>
-        public static string JsonTree(string json)
-        {
-            json = Regex.Unescape(json);
-            int level = 0;
-            var jsonArr = json.ToArray();  // Using System.Linq;
-            string jsonTree = string.Empty;
-            for (int i = 0; i < json.Length; i++)
-            {
-                char c = jsonArr[i];
-                if (level > 0 && '\n' == jsonTree.ToArray()[jsonTree.Length - 1])
-                {
-                    jsonTree += TreeLevel(level);
-                }
-                switch (c)
-                {
-                    case '{':
-                    case '[':
-                        jsonTree += c + "\n";
-                        level++;
-                        break;
-                    case ',':
-                        jsonTree += c + "\n";
-                        break;
-                    case '}':
-                    case ']':
-                        jsonTree += "\n";
-                        level--;
-                        jsonTree += TreeLevel(level);
-                        jsonTree += c;
-                        break;
-                    default:
-                        jsonTree += c;
-                        break;
-                }
-            }
-            return jsonTree;
-        }
-        /// <summary>
-        /// 树等级
-        /// </summary>
-        /// <param name="level"></param>
-        /// <returns></returns>
-        private static string TreeLevel(int level)
-        {
-            string leaf = string.Empty;
-            for (int t = 0; t < level; t++)
-            {
-                leaf += "\t";
-            }
-            return leaf;
+            StringBuilder sb = new StringBuilder();
+            JsonWriter jw = new JsonWriter(sb) { PrettyPrint = true };
+            objData.ToJson(jw);
+            WriteStringToFile(path, Regex.Unescape(sb.ToString()));
         }
 
         public static bool WriteStringToFile(string path, string text)

@@ -7,19 +7,19 @@ using System.Windows.Media;
 namespace Memo
 {
     /// <summary>
-    /// OptionWindow.xaml 的交互逻辑
+    /// OptionControl.xaml 的交互逻辑
     /// </summary>
-    public partial class OptionWindow : Window
+    public partial class OptionControl : UserControl
     {
         private MemoWindow m_memoWnd;
         private Dictionary<uint, ColorRadioButton> m_radioBtnMap
             = new Dictionary<uint, ColorRadioButton>();
 
 
-        public OptionWindow()
+        public OptionControl()
         {
             InitializeComponent();
-            //InitColorPanel();
+            InitColorPanel();
         }
 
         private void InitChecked()
@@ -34,8 +34,7 @@ namespace Memo
 
         private void InitColorPanel()
         {
-            m_colorPanel.Children.Clear();
-            double itemWidth = m_colorPanel.Width / Global.ColorInfos.Count;
+            m_colorGrid.Children.Clear();
             foreach (var info in Global.ColorInfos)
             {
                 ColorRadioButton btn = new ColorRadioButton
@@ -43,14 +42,13 @@ namespace Memo
                     Style = TryFindResource("RadioThemeColor") as Style,
                     Background = new SolidColorBrush(Tools.ColorFromString(info.DisplayColor)),
                     ToolTip = info.Desc,
-                    Width = itemWidth,
                     DataContext = info,
                     MarkStroke = info.IsDark ? Brushes.White : Brushes.Black,
                 };
 
                 m_radioBtnMap.Add(info.Id, btn);
                 btn.Click += OnColorClick;
-                m_colorPanel.Children.Add(btn);
+                m_colorGrid.Children.Add(btn);
             }
         }
 
@@ -67,21 +65,25 @@ namespace Memo
                 m_memoWnd.SetTheme(info);
             }
 
-            Hide();
+            //Visibility = Visibility.Hidden;
         }
 
-        private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             bool isShow = (bool)e.NewValue;
             if (isShow)
             {
-                m_memoWnd = Owner as MemoWindow;
+                m_memoWnd = DataContext as MemoWindow;
                 InitChecked();
             }
             else
             {
                 m_memoWnd = null;
-                Owner = null;
+                DataContext = null;
             }
         }
     }
