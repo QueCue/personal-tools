@@ -15,14 +15,14 @@ namespace Memo
     /// </summary>
     public partial class MemoWindow : Window
     {
-        private static readonly Thickness g_titleNormalMargin = new Thickness(0, 0, 0, 32);
         private static readonly double g_optionCtrlAutoWidthLimit = 400;
         private static readonly double g_optionCtrlFixedWidth = 290;
 
         private Window m_oriParentWnd;
         private double m_unfoldWndHeight;
-        private ThicknessAnimation m_thicknessAnim;
+        private DoubleAnimation m_doubleAnim;
         private Button[] m_btnsNeedChangeColor;
+        private bool m_isShowOption;
 
         private static Dictionary<string, ImageSource> g_btnToImgBlackMap
             = new Dictionary<string, ImageSource>();
@@ -125,10 +125,13 @@ namespace Memo
         private void ShowOption()
         {
             var ctrl = Global.OptionCtrl;
+            ctrl.Visibility = Visibility.Visible;
             ctrl.DataContext = this;
             m_grid.Children.Add(ctrl);
             Grid.SetRow(ctrl, 0);
             Grid.SetRowSpan(ctrl, 2);
+            m_isShowOption = true;
+            m_mask.Visibility = Visibility.Visible;
         }
 
         private void HideOption()
@@ -136,6 +139,15 @@ namespace Memo
             var ctrl = Global.OptionCtrl;
             ctrl.Visibility = Visibility.Hidden;
             m_grid.Children.Remove(ctrl);
+            m_isShowOption = false;
+        }
+
+        private void PlayAnim(bool isReverse)
+        {
+            m_doubleAnim.From = m_titleBar.Height;
+            m_doubleAnim.To = isReverse ? 0 : m_grid.RowDefinitions[0].ActualHeight;
+            m_doubleAnim.Duration = new Duration(TimeSpan.Parse("0:0:0.2"));
+            m_titleBar.BeginAnimation(HeightProperty, m_doubleAnim);
         }
 
         private void OnCloseClick(object sender, RoutedEventArgs e)
@@ -163,12 +175,7 @@ namespace Memo
 
         private void OnOptionClick(object sender, RoutedEventArgs e)
         {
-            var ctrl = Global.OptionCtrl;
-            ctrl.DataContext = this;
-            (Content as Grid).Children.Add(ctrl);
-            Grid.SetRow(ctrl, 0);
-            Grid.SetRowSpan(ctrl, 2);
-            m_mask.Visibility = Visibility.Visible;
+            ShowOption();
         }
 
         private void MemoWindow_OnLoaded(object sender, RoutedEventArgs e)
@@ -176,8 +183,8 @@ namespace Memo
             m_oriParentWnd = Owner;
             ThemeId = Global.Default.Id;
             MinHeight = m_titleBar.ActualHeight + BorderThickness.Top + BorderThickness.Bottom;
-            m_thicknessAnim = new ThicknessAnimation();
-            m_titleBar.Margin = g_titleNormalMargin;
+            m_doubleAnim = new DoubleAnimation();
+            m_titleBar.Height = 0;
             m_btnsNeedChangeColor = new[] { m_newBtn, m_optionBtn, m_topmostBtn, m_closeBtn };
             if (null == g_btnToImgBlackMap
                 || g_btnToImgBlackMap.Count <= 0)
@@ -258,18 +265,12 @@ namespace Memo
 
         private void Window_Activated(object sender, EventArgs e)
         {
-            m_thicknessAnim.From = m_titleBar.Margin;
-            m_thicknessAnim.To = new Thickness();
-            m_thicknessAnim.Duration = new Duration(TimeSpan.Parse("0:0:0.2"));
-            m_titleBar.BeginAnimation(MarginProperty, m_thicknessAnim);
+            PlayAnim(false);
         }
 
         private void Window_Deactivated(object sender, EventArgs e)
         {
-            m_thicknessAnim.From = m_titleBar.Margin;
-            m_thicknessAnim.To = g_titleNormalMargin;
-            m_thicknessAnim.Duration = new Duration(TimeSpan.Parse("0:0:0.2"));
-            m_titleBar.BeginAnimation(MarginProperty, m_thicknessAnim);
+            PlayAnim(true);
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -289,6 +290,7 @@ namespace Memo
         private void Mask_MouseDown(object sender, MouseButtonEventArgs e)
         {
             m_mask.Visibility = Visibility.Hidden;
+            HideOption();
         }
     }
 }
