@@ -321,6 +321,16 @@ namespace Memo
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             HandleOptionCtrlSize();
+            if (m_optionBtn.IsVisible
+                && e.NewSize.Height < Global.OptionCtrl.NormalHeight)
+            {
+                m_optionBtn.Visibility = Visibility.Hidden;
+            }
+            else if (!m_optionBtn.IsVisible
+                && e.NewSize.Height >= Global.OptionCtrl.NormalHeight)
+            {
+                m_optionBtn.Visibility = Visibility.Visible;
+            }
         }
 
         private void Mask_MouseDown(object sender, MouseButtonEventArgs e)

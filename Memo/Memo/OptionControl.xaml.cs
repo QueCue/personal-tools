@@ -16,14 +16,15 @@ namespace Memo
         private MemoWindow m_memoWnd;
         private Dictionary<uint, ColorRadioButton> m_radioBtnMap
             = new Dictionary<uint, ColorRadioButton>();
-        private double m_height;
         private EventHandler m_hideHandler;
+
+        public double NormalHeight { get; private set; }
 
         public OptionControl()
         {
             InitializeComponent();
             InitColorCtrl();
-            m_height = Height;
+            NormalHeight = Height;
             Height = 0;
         }
 
@@ -89,7 +90,7 @@ namespace Memo
         {
             DoubleAnimation doubleAnim = new DoubleAnimation();
             doubleAnim.From = Height;
-            doubleAnim.To = isReverse ? 0 : m_height;
+            doubleAnim.To = isReverse ? 0 : NormalHeight;
             doubleAnim.Duration = new Duration(TimeSpan.Parse("0:0:0.2"));
             if (null != onFinished)
             {
