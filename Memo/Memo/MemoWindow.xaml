@@ -16,6 +16,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="32" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="38" />
         </Grid.RowDefinitions>
         <Border Name="m_titleBar" Grid.Row="0" Background="#fff2ab" VerticalAlignment="Top"
                 MouseLeftButtonDown="TitleBar_MouseLeftButtonDown" Cursor="SizeAll">
@@ -63,7 +64,13 @@
         </Border>
         <RichTextBox Name="m_mainInput" Grid.Row="1" Margin="10" FontSize="16"
                  Background="Transparent" BorderThickness="0" AcceptsReturn="True"
-                 VerticalScrollBarVisibility="Auto" >
+                 VerticalScrollBarVisibility="Auto">
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="LineHeight" Value="20"/>
+                </Style>
+            </RichTextBox.Resources>
             <FlowDocument>
                 <Paragraph>
                     <Run Text="服务区分"/>
@@ -72,5 +79,20 @@
         </RichTextBox>
         <Border Name="m_mask" Background="#66FFFFFF" Grid.RowSpan="2"
                 Visibility="Hidden" MouseDown="Mask_MouseDown"/>
+        <Path Data="M5,279 L220.0837,279" Fill="Transparent" HorizontalAlignment="Left" Height="1"
+              Grid.Row="2" Stretch="Fill" Stroke="#FFE0D7D7" VerticalAlignment="Top"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <Button Name="m_boldBtn" Width="32" Height="32" ToolTip="关闭窗口"
+                    Click="BoldBtn_Click" Style="{StaticResource MyButton}">
+                <Button.Background>
+                    <ImageBrush ImageSource="res/bold.png" Opacity="0.6" Stretch="None" />
+                </Button.Background>
+            </Button>
+            <Button Name="m_italicBtn" Content="斜体" Margin="3" Click="ItalicBtn_Click"/>
+            <Button Name="m_underlineBtn" Content="下划线" Margin="3" Click="UnderlineBtn_Click"/>
+            <Button Name="m_strikeThroughBtn" Content="删除线" Margin="3" Click="StrikeThroughBtn_Click"/>
+            <Button Name="m_4italicBtn" Content="序号" Margin="3"/>
+            <Button Name="m_5italicBtn" Content="图片" Margin="3"/>
+        </StackPanel>
     </Grid>
 </Window>

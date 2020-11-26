@@ -65,6 +65,7 @@
     <Compile Include="ColorRadioButton.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="MemoData.cs" />
+    <Compile Include="MemoWindow_TextStyle.cs" />
     <Compile Include="MouseHook.cs" />
     <Compile Include="OptionControl.xaml.cs">
       <DependentUpon>OptionControl.xaml</DependentUpon>
@@ -145,6 +146,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="res\selected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\bold.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
