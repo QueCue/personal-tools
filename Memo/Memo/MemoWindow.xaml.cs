@@ -17,38 +17,36 @@ namespace Memo
     {
         private static readonly double g_optionCtrlAutoWidthLimit = 400;
         private static readonly double g_optionCtrlFixedWidth = 290;
+        private static Dictionary<string, ImageSource> g_btnToImgBlackMap
+            = new Dictionary<string, ImageSource>();
+        private static Dictionary<string, ImageSource> g_btnToImgWhiteMap
+            = new Dictionary<string, ImageSource>();
 
         private Window m_oriParentWnd;
         private double m_unfoldWndHeight;
         private DoubleAnimation m_doubleAnim;
         private Button[] m_btnsNeedChangeColor;
         private OptionControl m_optionCtrl;
-
-        private static Dictionary<string, ImageSource> g_btnToImgBlackMap
-            = new Dictionary<string, ImageSource>();
-        private static Dictionary<string, ImageSource> g_btnToImgWhiteMap
-            = new Dictionary<string, ImageSource>();
-
         public uint ThemeId { get; private set; }
 
         public MemoWindow()
         {
-            DataContext = this;
             InitializeComponent();
         }
 
-        public void SetTheme(ThemeInfo info)
+        public void SetTheme(uint themeId)
         {
+            ThemeInfo info = Global.GetThemeInfo(themeId);
             if (null == info)
             {
                 return;
             }
 
             ThemeInfo preInfo = Global.GetThemeInfo(ThemeId);
-            ThemeId = info.Id;
+            ThemeId = themeId;
             m_titleBar.Background = new SolidColorBrush(Tools.ColorFromString(info.TitleBarColor));
             Background = new SolidColorBrush(Tools.ColorFromString(info.BgColor));
-            if (info.IsDark == preInfo.IsDark)
+            if (info.IsDark == preInfo?.IsDark)
             {
                 return;
             }
@@ -214,7 +212,7 @@ namespace Memo
         private void MemoWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
             m_oriParentWnd = Owner;
-            ThemeId = Global.DefaultTheme.Id;
+            ThemeId = Global.DefaultTheme;
             MinHeight = m_titleBar.ActualHeight + BorderThickness.Top + BorderThickness.Bottom;
             m_doubleAnim = new DoubleAnimation();
             m_titleBar.Height = 0;
@@ -228,6 +226,7 @@ namespace Memo
                 }
             }
 
+            SetTheme(Global.CurrentThemeId);
             //SYTEST
             OnTopMostClick(null, null);
             Closed += (sender1, e1) => Application.Current.Shutdown();

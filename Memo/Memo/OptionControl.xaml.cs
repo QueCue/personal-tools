@@ -75,7 +75,7 @@ namespace Memo
                     Style = TryFindResource("RadioThemeColor") as Style,
                     Background = new SolidColorBrush(Tools.ColorFromString(info.DisplayColor)),
                     ToolTip = info.Desc,
-                    DataContext = info,
+                    DataContext = info.Id,
                     MarkStroke = info.IsDark ? Brushes.White : Brushes.Black,
                 };
 
@@ -106,10 +106,11 @@ namespace Memo
                 return;
             }
 
-            ThemeInfo info = btn.DataContext as ThemeInfo;
-            if (m_memoWnd.ThemeId != info.Id)
+            uint themeId = (uint)btn.DataContext;
+            if (m_memoWnd.ThemeId != themeId)
             {
-                m_memoWnd.SetTheme(info);
+                m_memoWnd.SetTheme(themeId);
+                Global.CurrentThemeId = themeId;
             }
 
             Hide();

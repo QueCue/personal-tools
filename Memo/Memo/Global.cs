@@ -34,7 +34,8 @@ namespace Memo
             }
         }
 
-        public static ThemeInfo DefaultTheme => ColorInfos[0];
+        public static uint DefaultTheme => ColorInfos[0].Id;
+        public static uint CurrentThemeId;
 
         private static OptionControl m_optionCtrl = new OptionControl();
         public static OptionControl OptionCtrl => m_optionCtrl;

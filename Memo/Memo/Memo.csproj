@@ -70,9 +70,6 @@
     </Compile>
     <Compile Include="tools\JsonHelper.cs" />
     <Compile Include="tools\Tools.cs" />
-    <Compile Include="OptionWindow.xaml.cs">
-      <DependentUpon>OptionWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ThemeInfo.cs" />
     <Compile Include="tools\WPFSystemTray.cs" />
     <Compile Include="Win32.cs" />
@@ -97,10 +94,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="OptionControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="OptionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
