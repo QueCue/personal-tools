@@ -34,6 +34,7 @@ namespace Memo
             InitializeComponent();
         }
 
+        #region My methods
         public void SetTheme(uint themeId)
         {
             ThemeInfo info = Global.GetThemeInfo(themeId);
@@ -181,6 +182,18 @@ namespace Memo
             m_titleBar.BeginAnimation(HeightProperty, m_doubleAnim);
         }
 
+        private void Fold()
+        {
+            m_unfoldWndHeight = Height;
+            Height = MinHeight;
+        }
+
+        private void Unfold()
+        {
+            Height = m_unfoldWndHeight;
+        }
+        #endregion
+
         private void OnCloseClick(object sender, RoutedEventArgs e)
         {
             Close();
@@ -248,12 +261,11 @@ namespace Memo
             {
                 if (Height == MinHeight)
                 {
-                    Height = m_unfoldWndHeight;
+                    Unfold();
                 }
                 else
                 {
-                    m_unfoldWndHeight = Height;
-                    Height = MinHeight;
+                    Fold();
                 }
             }
 
