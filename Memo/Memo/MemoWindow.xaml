@@ -61,9 +61,15 @@
                 </StackPanel>
             </Grid>
         </Border>
-        <TextBox Name="m_mainInput" Grid.Row="1" Margin="10" Text="asfasfsf" FontSize="16"
+        <RichTextBox Name="m_mainInput" Grid.Row="1" Margin="10" FontSize="16"
                  Background="Transparent" BorderThickness="0" AcceptsReturn="True"
-                 VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" />
+                 VerticalScrollBarVisibility="Auto" >
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="服务区分"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
         <Border Name="m_mask" Background="#66FFFFFF" Grid.RowSpan="2"
                 Visibility="Hidden" MouseDown="Mask_MouseDown"/>
     </Grid>
