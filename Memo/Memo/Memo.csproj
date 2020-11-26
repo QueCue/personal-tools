@@ -131,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="res\new.png" />
+    <Resource Include="res\underline.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="res\close.png" />
@@ -149,6 +150,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="res\bold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\italic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\strike_through.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\serial.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\picture.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

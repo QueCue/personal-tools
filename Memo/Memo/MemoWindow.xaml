@@ -85,14 +85,39 @@
             <Button Name="m_boldBtn" Width="32" Height="32" ToolTip="关闭窗口"
                     Click="BoldBtn_Click" Style="{StaticResource MyButton}">
                 <Button.Background>
-                    <ImageBrush ImageSource="res/bold.png" Opacity="0.6" Stretch="None" />
+                    <ImageBrush ImageSource="res/bold.png" Opacity="0.5" Stretch="None" />
                 </Button.Background>
             </Button>
-            <Button Name="m_italicBtn" Content="斜体" Margin="3" Click="ItalicBtn_Click"/>
-            <Button Name="m_underlineBtn" Content="下划线" Margin="3" Click="UnderlineBtn_Click"/>
-            <Button Name="m_strikeThroughBtn" Content="删除线" Margin="3" Click="StrikeThroughBtn_Click"/>
-            <Button Name="m_4italicBtn" Content="序号" Margin="3"/>
-            <Button Name="m_5italicBtn" Content="图片" Margin="3"/>
+            <Button Name="m_italicBtn" Width="32" Height="32" ToolTip="关闭窗口"
+                    Click="ItalicBtn_Click" Style="{StaticResource MyButton}">
+                <Button.Background>
+                    <ImageBrush ImageSource="res/italic.png" Opacity="0.7" Stretch="None" />
+                </Button.Background>
+            </Button>
+            <Button Name="m_underlineBtn" Width="32" Height="32" ToolTip="关闭窗口"
+                    Click="UnderlineBtn_Click" Style="{StaticResource MyButton}">
+                <Button.Background>
+                    <ImageBrush ImageSource="res/underline.png" Opacity="0.6" Stretch="None" />
+                </Button.Background>
+            </Button>
+            <Button Name="m_strikeThroughBtn" Width="32" Height="32" ToolTip="关闭窗口"
+                    Click="StrikeThroughBtn_Click" Style="{StaticResource MyButton}">
+                <Button.Background>
+                    <ImageBrush ImageSource="res/strike_through.png" Opacity="0.5" Stretch="None" />
+                </Button.Background>
+            </Button>
+            <Button Name="m_serialBtn" Width="32" Height="32" ToolTip="关闭窗口"
+                    Click="StrikeThroughBtn_Click" Style="{StaticResource MyButton}">
+                <Button.Background>
+                    <ImageBrush ImageSource="res/serial.png" Opacity="0.6" Stretch="None" />
+                </Button.Background>
+            </Button>
+            <Button Name="m_pictureBtn" Width="32" Height="32" ToolTip="关闭窗口"
+                    Click="StrikeThroughBtn_Click" Style="{StaticResource MyButton}">
+                <Button.Background>
+                    <ImageBrush ImageSource="res/picture.png" Opacity="0.6" Stretch="None" />
+                </Button.Background>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>
