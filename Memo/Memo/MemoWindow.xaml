@@ -64,7 +64,7 @@
         <TextBox Name="m_mainInput" Grid.Row="1" Margin="10" Text="asfasfsf" FontSize="16"
                  Background="Transparent" BorderThickness="0" AcceptsReturn="True"
                  VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" />
-        <Border Name="m_mask" Background="Transparent" Grid.RowSpan="2"
+        <Border Name="m_mask" Background="#66FFFFFF" Grid.RowSpan="2"
                 Visibility="Hidden" MouseDown="Mask_MouseDown"/>
     </Grid>
 </Window>

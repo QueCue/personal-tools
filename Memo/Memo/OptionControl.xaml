@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Memo" Background="White"
-             mc:Ignorable="d" Height="200" Width="Auto" Loaded="UserControl_Loaded"
-             d:DesignHeight="116.5" d:DesignWidth="315" IsVisibleChanged="UserControl_IsVisibleChanged"
+             mc:Ignorable="d" Height="200" Width="Auto"
+             d:DesignHeight="116.5" d:DesignWidth="315" 
              VerticalAlignment="Top" HorizontalAlignment="Stretch">
     <Grid>
         <StackPanel Orientation="Vertical">

@@ -22,7 +22,7 @@ namespace Memo
         private double m_unfoldWndHeight;
         private DoubleAnimation m_doubleAnim;
         private Button[] m_btnsNeedChangeColor;
-        private bool m_isShowOption;
+        private OptionControl m_optionCtrl;
 
         private static Dictionary<string, ImageSource> g_btnToImgBlackMap
             = new Dictionary<string, ImageSource>();
@@ -58,6 +58,25 @@ namespace Memo
             foreach (var btn in m_btnsNeedChangeColor)
             {
                 ChangeBtnColor(btn, info.IsDark);
+            }
+        }
+
+        private void HandleOptionCtrlSize()
+        {
+            if (!m_mask.IsVisible)
+            {
+                return;
+            }
+
+            if (Width > g_optionCtrlAutoWidthLimit)
+            {
+                m_optionCtrl.HorizontalAlignment = HorizontalAlignment.Right;
+                m_optionCtrl.Width = g_optionCtrlFixedWidth;
+            }
+            else
+            {
+                m_optionCtrl.HorizontalAlignment = HorizontalAlignment.Stretch;
+                m_optionCtrl.Width = double.NaN;
             }
         }
 
@@ -124,22 +143,36 @@ namespace Memo
 
         private void ShowOption()
         {
-            var ctrl = Global.OptionCtrl;
-            ctrl.Visibility = Visibility.Visible;
-            ctrl.DataContext = this;
-            m_grid.Children.Add(ctrl);
-            Grid.SetRow(ctrl, 0);
-            Grid.SetRowSpan(ctrl, 2);
-            m_isShowOption = true;
+            if (null == m_optionCtrl)
+            {
+                m_optionCtrl = Global.OptionCtrl;
+            }
+
+            m_optionCtrl.Show(this, delegate
+            {
+                m_mask.Visibility = Visibility.Hidden;
+                if (IsActive)
+                {
+                    PlayAnim(false);
+                }
+            });
+
+            if (m_optionCtrl.Parent != m_grid)
+            {
+                ((Grid)m_optionCtrl.Parent)?.Children.Remove(m_optionCtrl);
+                m_grid.Children.Add(m_optionCtrl);
+                Grid.SetRow(m_optionCtrl, 0);
+                Grid.SetRowSpan(m_optionCtrl, 2);
+            }
+
             m_mask.Visibility = Visibility.Visible;
+            HandleOptionCtrlSize();
+            PlayAnim(true);
         }
 
         private void HideOption()
         {
-            var ctrl = Global.OptionCtrl;
-            ctrl.Visibility = Visibility.Hidden;
-            m_grid.Children.Remove(ctrl);
-            m_isShowOption = false;
+            m_optionCtrl?.Hide();
         }
 
         private void PlayAnim(bool isReverse)
@@ -181,7 +214,7 @@ namespace Memo
         private void MemoWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
             m_oriParentWnd = Owner;
-            ThemeId = Global.Default.Id;
+            ThemeId = Global.DefaultTheme.Id;
             MinHeight = m_titleBar.ActualHeight + BorderThickness.Top + BorderThickness.Bottom;
             m_doubleAnim = new DoubleAnimation();
             m_titleBar.Height = 0;
@@ -270,26 +303,17 @@ namespace Memo
 
         private void Window_Deactivated(object sender, EventArgs e)
         {
+            HideOption();
             PlayAnim(true);
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            //if (e.NewSize.Width > g_optionCtrlAutoWidthLimit)
-            //{
-            //    m_optionCtrl.Width = g_optionCtrlFixedWidth;
-            //    m_optionCtrl.HorizontalAlignment = HorizontalAlignment.Right;
-            //}
-            //else
-            //{
-            //    m_optionCtrl.Width = double.NaN;
-            //    m_optionCtrl.HorizontalAlignment = HorizontalAlignment.Stretch;
-            //}
+            HandleOptionCtrlSize();
         }
 
         private void Mask_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            m_mask.Visibility = Visibility.Hidden;
             HideOption();
         }
     }

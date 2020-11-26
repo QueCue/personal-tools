@@ -1,8 +1,10 @@
 ﻿using Memo.tools;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace Memo
 {
@@ -14,12 +16,43 @@ namespace Memo
         private MemoWindow m_memoWnd;
         private Dictionary<uint, ColorRadioButton> m_radioBtnMap
             = new Dictionary<uint, ColorRadioButton>();
-
+        private double m_height;
+        private EventHandler m_hideHandler;
 
         public OptionControl()
         {
             InitializeComponent();
-            InitColorPanel();
+            InitColorCtrl();
+            m_height = Height;
+            Height = 0;
+        }
+
+        public void Show(MemoWindow wnd, EventHandler hideHandler)
+        {
+            if (IsVisible)
+            {
+                return;
+            }
+
+            Visibility = Visibility.Visible;
+            PlayAnim(false);
+            m_memoWnd = wnd;
+            InitChecked();
+            m_hideHandler = hideHandler + delegate
+            {
+                Visibility = Visibility.Hidden;
+                Console.WriteLine("~~~~~~~~~~~~~~");    //SYTest
+            };
+        }
+
+        public void Hide()
+        {
+            if (!IsVisible)
+            {
+                return;
+            }
+
+            PlayAnim(true, m_hideHandler);
         }
 
         private void InitChecked()
@@ -32,7 +65,7 @@ namespace Memo
             btn.IsChecked = true;
         }
 
-        private void InitColorPanel()
+        private void InitColorCtrl()
         {
             m_colorGrid.Children.Clear();
             foreach (var info in Global.ColorInfos)
@@ -52,6 +85,20 @@ namespace Memo
             }
         }
 
+        private void PlayAnim(bool isReverse, EventHandler onFinished = null)
+        {
+            DoubleAnimation doubleAnim = new DoubleAnimation();
+            doubleAnim.From = Height;
+            doubleAnim.To = isReverse ? 0 : m_height;
+            doubleAnim.Duration = new Duration(TimeSpan.Parse("0:0:0.2"));
+            if (null != onFinished)
+            {
+                doubleAnim.Completed += onFinished;
+            }
+
+            BeginAnimation(HeightProperty, doubleAnim);
+        }
+
         private void OnColorClick(object sender, RoutedEventArgs e)
         {
             if (!(sender is RadioButton btn))
@@ -65,26 +112,7 @@ namespace Memo
                 m_memoWnd.SetTheme(info);
             }
 
-            //Visibility = Visibility.Hidden;
-        }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            bool isShow = (bool)e.NewValue;
-            if (isShow)
-            {
-                m_memoWnd = DataContext as MemoWindow;
-                InitChecked();
-            }
-            else
-            {
-                m_memoWnd = null;
-                DataContext = null;
-            }
+            Hide();
         }
     }
 }

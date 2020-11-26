@@ -22,8 +22,6 @@ namespace Memo
                     path = "config/Theme.json";
 #endif
                     g_colorInfos = JsonHelper.ReadJson<List<ThemeInfo>>(path);
-
-                    JsonHelper.WriteJson("aaaaaaaaaaa.json", g_colorInfos);
                     if (null == g_colorInfos)
                     {
                         return null;
@@ -36,7 +34,7 @@ namespace Memo
             }
         }
 
-        public static ThemeInfo Default => ColorInfos[0];
+        public static ThemeInfo DefaultTheme => ColorInfos[0];
 
         private static OptionControl m_optionCtrl = new OptionControl();
         public static OptionControl OptionCtrl => m_optionCtrl;
