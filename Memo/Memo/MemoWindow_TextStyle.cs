@@ -6,27 +6,34 @@ namespace Memo
 {
     public partial class MemoWindow : Window
     {
-
         private void BoldBtn_Click(object sender, RoutedEventArgs e)
         {
             m_mainInput.Selection.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
-            m_mainInput.Focus();
         }
 
         private void ItalicBtn_Click(object sender, RoutedEventArgs e)
         {
             var selection = m_mainInput.Selection;
-            var fs = (FontStyle)selection.GetPropertyValue(TextElement.FontStyleProperty);
-            if (fs == null || fs != FontStyles.Italic)
+            var endPos = selection.Start.GetPositionAtOffset(1);
+            if (null == endPos)
             {
-                selection.ApplyPropertyValue(TextElement.FontStyleProperty, FontStyles.Italic);
-            }
-            else
-            {
-                selection.ApplyPropertyValue(TextElement.FontStyleProperty, FontStyles.Normal);
+                return;
             }
 
-            m_mainInput.Focus();
+            m_mainInput.Selection.Select(selection.Start, endPos);
+            //m_mainInput.Focus();
+            return;
+            //var obj = .GetPropertyValue(TextElement.FontStyleProperty);
+            //if (null == obj
+            //    || (obj is FontStyle fontStyle && fontStyle != FontStyles.Italic))
+            //{
+            //    selection.ApplyPropertyValue(TextElement.FontStyleProperty, FontStyles.Italic);
+            //}
+            //else
+            //{
+            //    selection.ApplyPropertyValue(TextElement.FontStyleProperty, FontStyles.Normal);
+            //}
+            //m_mainInput.Focus();
         }
 
         private void UnderlineBtn_Click(object sender, RoutedEventArgs e)
@@ -45,7 +52,7 @@ namespace Memo
                 }
             }
 
-            m_mainInput.Focus();
+            //m_mainInput.Focus();
         }
 
         private void StrikeThroughBtn_Click(object sender, RoutedEventArgs e)
@@ -64,7 +71,7 @@ namespace Memo
                 }
             }
 
-            m_mainInput.Focus();
+            //m_mainInput.Focus();
         }
     }
 }

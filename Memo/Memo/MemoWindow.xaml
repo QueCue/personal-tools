@@ -22,43 +22,28 @@
                 MouseLeftButtonDown="TitleBar_MouseLeftButtonDown" Cursor="SizeAll">
             <Grid>
                 <StackPanel Orientation="Horizontal">
-                    <Button Name="m_newBtn" Width="32" Height="32" ToolTip="新建笔记"
-                    Click="OnNewClick" Style="{StaticResource MyButton}">
-                        <Button.Background>
-                            <ImageBrush ImageSource="res/new.png" Opacity="0.6" Stretch="None"
-                                Viewport="-0.01,-0.01,1,1" Viewbox="0.01,0.01,1,1" />
-                        </Button.Background>
-                    </Button>
+                    <memo:ImageButton x:Name="m_newBtn" ToolTip="新建笔记" Source="res/new.png" Click="OnNewClick" 
+                                      ImageViewport="-0.01,-0.01,1,1" ImageViewbox="0.01,0.01,1,1"/>
                     <TextBlock Name="m_titleStr" Text="标题" VerticalAlignment="Center" Margin="0,7,0,6" Cursor="Arrow"
-                     Height="17" MouseLeftButtonDown="TitleStr_MouseLeftButtonDown" />
+                               Height="17" MouseLeftButtonDown="TitleStr_MouseLeftButtonDown" />
                     <TextBox Name="m_titleInput" Text="标题" VerticalContentAlignment="Center" Margin="0,2,0,2"
                      Height="25" MouseLeftButtonDown="TitleStr_MouseLeftButtonDown" LostFocus="TitleInput_LostFocus"
                      Width="105" Visibility="Collapsed" KeyDown="TitleInput_KeyDown" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Name="m_optionBtn" Width="32" Height="32" ToolTip="菜单"
-                    Click="OnOptionClick" Margin="0" Style="{StaticResource MyButton}">
-                        <Button.Background>
-                            <ImageBrush ImageSource="res/option.png" Opacity="0.6" Stretch="None" />
-                        </Button.Background>
-                    </Button>
-                    <Button x:Name="m_topmostBtn" Width="32" Height="32" ToolTipOpening="OnTopmostBtnTipOpen" ToolTip="置顶"
-                    Click="OnTopMostClick" Margin="0" Style="{StaticResource MyButton}" RenderTransformOrigin="0.5,0.5">
+                    <memo:ImageButton x:Name="m_optionBtn" ToolTip="菜单"
+                    Click="OnOptionClick" Source="res/option.png" />
+                    <memo:ImageButton x:Name="m_topmostBtn"
+                                      ToolTipOpening="OnTopmostBtnTipOpen" ToolTip="置顶"
+                                      Click="OnTopMostClick" RenderTransformOrigin="0.5,0.5" Source="res/pin.png">
                         <Button.RenderTransform>
                             <TransformGroup>
                                 <RotateTransform Angle="90" />
                             </TransformGroup>
                         </Button.RenderTransform>
-                        <Button.Background>
-                            <ImageBrush ImageSource="res/pin.png" Opacity="0.6" Stretch="None" />
-                        </Button.Background>
-                    </Button>
-                    <Button Name="m_closeBtn" Width="32" Height="32" ToolTip="关闭窗口"
-                    Click="OnCloseClick" Style="{StaticResource MyButton}">
-                        <Button.Background>
-                            <ImageBrush ImageSource="res/close.png" Opacity="0.6" Stretch="None" />
-                        </Button.Background>
-                    </Button>
+                    </memo:ImageButton>
+                    <memo:ImageButton x:Name="m_closeBtn" 
+                                      ToolTip="关闭窗口" Source="res/close.png" Click="OnCloseClick" />
                 </StackPanel>
             </Grid>
         </Border>
@@ -73,7 +58,7 @@
             </RichTextBox.Resources>
             <FlowDocument>
                 <Paragraph>
-                    <Run Text="服务区分"/>
+                    <Run Text="服务区分按时发顺丰请问发顺丰"/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
@@ -82,42 +67,24 @@
         <Path Data="M5,279 L220.0837,279" Fill="Transparent" HorizontalAlignment="Left" Height="1"
               Grid.Row="2" Stretch="Fill" Stroke="#FFE0D7D7" VerticalAlignment="Top"/>
         <StackPanel Orientation="Horizontal" Grid.Row="2">
-            <Button Name="m_boldBtn" Width="32" Height="32" ToolTip="关闭窗口"
-                    Click="BoldBtn_Click" Style="{StaticResource MyButton}">
-                <Button.Background>
-                    <ImageBrush ImageSource="res/bold.png" Opacity="0.5" Stretch="None" />
-                </Button.Background>
-            </Button>
-            <Button Name="m_italicBtn" Width="32" Height="32" ToolTip="关闭窗口"
-                    Click="ItalicBtn_Click" Style="{StaticResource MyButton}">
-                <Button.Background>
-                    <ImageBrush ImageSource="res/italic.png" Opacity="0.7" Stretch="None" />
-                </Button.Background>
-            </Button>
-            <Button Name="m_underlineBtn" Width="32" Height="32" ToolTip="关闭窗口"
-                    Click="UnderlineBtn_Click" Style="{StaticResource MyButton}">
-                <Button.Background>
-                    <ImageBrush ImageSource="res/underline.png" Opacity="0.6" Stretch="None" />
-                </Button.Background>
-            </Button>
-            <Button Name="m_strikeThroughBtn" Width="32" Height="32" ToolTip="关闭窗口"
-                    Click="StrikeThroughBtn_Click" Style="{StaticResource MyButton}">
-                <Button.Background>
-                    <ImageBrush ImageSource="res/strike_through.png" Opacity="0.5" Stretch="None" />
-                </Button.Background>
-            </Button>
-            <Button Name="m_serialBtn" Width="32" Height="32" ToolTip="关闭窗口"
-                    Click="StrikeThroughBtn_Click" Style="{StaticResource MyButton}">
-                <Button.Background>
-                    <ImageBrush ImageSource="res/serial.png" Opacity="0.6" Stretch="None" />
-                </Button.Background>
-            </Button>
-            <Button Name="m_pictureBtn" Width="32" Height="32" ToolTip="关闭窗口"
-                    Click="StrikeThroughBtn_Click" Style="{StaticResource MyButton}">
-                <Button.Background>
-                    <ImageBrush ImageSource="res/picture.png" Opacity="0.6" Stretch="None" />
-                </Button.Background>
-            </Button>
+            <memo:ImageButton x:Name="m_boldBtn" ToolTip="关闭窗口"
+                    Click="BoldBtn_Click" FocusTarget="{Binding ElementName=m_mainInput}" 
+                    Source="res/bold.png" ImageOpacity="0.5"/>
+            <memo:ImageButton x:Name="m_italicBtn" ToolTip="关闭窗口"
+                    Click="ItalicBtn_Click" FocusTarget="{Binding ElementName=m_mainInput}"
+                    Source="res/italic.png" ImageOpacity="0.7"/>
+            <memo:ImageButton x:Name="m_underlineBtn" ToolTip="关闭窗口"
+                    Click="UnderlineBtn_Click" FocusTarget="{Binding ElementName=m_mainInput}"
+                    Source="res/underline.png"/>
+            <memo:ImageButton x:Name="m_strikeThroughBtn" ToolTip="关闭窗口"
+                    Click="StrikeThroughBtn_Click" FocusTarget="{Binding ElementName=m_mainInput}"
+                    Source="res/strike_through.png" ImageOpacity="0.5"/>
+            <memo:ImageButton x:Name="m_serialBtn" ToolTip="关闭窗口"
+                    Click="StrikeThroughBtn_Click" FocusTarget="{Binding ElementName=m_mainInput}"
+                    Source="res/serial.png"/>
+            <memo:ImageButton x:Name="m_pictureBtn" ToolTip="关闭窗口"
+                    Click="StrikeThroughBtn_Click" FocusTarget="{Binding ElementName=m_mainInput}"
+                    Source="res/picture.png"/>
         </StackPanel>
     </Grid>
 </Window>

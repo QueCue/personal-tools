@@ -1,10 +1,8 @@
 ﻿using Memo.tools;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -231,6 +229,7 @@ namespace Memo
             MinHeight = m_titleBar.ActualHeight + BorderThickness.Top + BorderThickness.Bottom;
             m_doubleAnim = new DoubleAnimation();
             m_titleBar.Height = 0;
+            return;
             m_btnsNeedChangeColor = new[] { m_newBtn, m_optionBtn, m_topmostBtn, m_closeBtn };
             if (null == g_btnToImgBlackMap
                 || g_btnToImgBlackMap.Count <= 0)

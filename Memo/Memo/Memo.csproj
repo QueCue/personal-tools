@@ -63,7 +63,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ColorRadioButton.cs" />
+    <Compile Include="FocusBehavior.cs" />
+    <Compile Include="FocusExtension.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="ImageButton.cs" />
     <Compile Include="MemoData.cs" />
     <Compile Include="MemoWindow_TextStyle.cs" />
     <Compile Include="MouseHook.cs" />

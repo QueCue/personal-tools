@@ -73,7 +73,6 @@ namespace Memo
             {
                 ColorRadioButton btn = new ColorRadioButton
                 {
-                    Style = TryFindResource("RadioThemeColor") as Style,
                     Background = new SolidColorBrush(Tools.ColorFromString(info.DisplayColor)),
                     ToolTip = info.Desc,
                     DataContext = info.Id,
