@@ -6,17 +6,19 @@ namespace Memo
 {
     public class ColorRadioButton : RadioButton
     {
+        public static readonly DependencyProperty MarkStrokeProperty =
+            DependencyProperty.Register("MarkStroke", typeof(Brush), typeof(ColorRadioButton),
+                new PropertyMetadata(Brushes.White));
+
         static ColorRadioButton()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorRadioButton), new FrameworkPropertyMetadata(typeof(ColorRadioButton)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorRadioButton),
+                new FrameworkPropertyMetadata(typeof(ColorRadioButton)));
         }
-
-        public static readonly DependencyProperty MarkStrokeProperty =
-           DependencyProperty.Register("MarkStroke", typeof(Brush), typeof(ColorRadioButton), new PropertyMetadata(Brushes.White));
 
         public Brush MarkStroke
         {
-            get => (Brush)GetValue(MarkStrokeProperty);
+            get => (Brush) GetValue(MarkStrokeProperty);
             set => SetValue(MarkStrokeProperty, value);
         }
     }

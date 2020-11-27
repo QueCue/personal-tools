@@ -4,5 +4,4 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" Closed="Window_Closed" WindowStyle="None" AllowsTransparency="True"
-        Title="MainWindow" Height="0" Width="0" Loaded="Window_Loaded"/>
-
+        Title="MainWindow" Height="0" Width="0" Loaded="Window_Loaded" />

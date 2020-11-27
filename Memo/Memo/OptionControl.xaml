@@ -1,32 +1,32 @@
 ﻿<UserControl x:Class="Memo.OptionControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:memo="clr-namespace:Memo" Background="White"
              mc:Ignorable="d" Height="200" Width="Auto"
-             d:DesignHeight="116.5" d:DesignWidth="315" 
+             d:DesignHeight="116.5" d:DesignWidth="315"
              VerticalAlignment="Top" HorizontalAlignment="Stretch">
     <UserControl.Effect>
-        <DropShadowEffect Direction="270" Opacity="0.2"/>
+        <DropShadowEffect Direction="270" Opacity="0.2" />
     </UserControl.Effect>
     <Grid>
         <StackPanel Orientation="Vertical">
             <UniformGrid Name="m_colorGrid" Rows="1" Height="50">
                 <memo:ImageButton ToolTip="新建笔记" Background="#FFFFE66E"
-                     FocusTarget="{Binding ElementName=m_mainInput}"/>
-                <memo:ImageButton ToolTip="新建笔记" Background="#FFA1EF9B" 
-                     FocusTarget="{Binding ElementName=m_mainInput}"/>
-                <memo:ImageButton ToolTip="新建笔记" Background="#FFFFAFDF" 
-                     FocusTarget="{Binding ElementName=m_mainInput}"/>
-                <memo:ImageButton ToolTip="新建笔记" Background="#FFD7AFFF" 
-                     FocusTarget="{Binding ElementName=m_mainInput}"/>
-                <memo:ImageButton ToolTip="新建笔记" Background="#FF9EDFFF" 
-                     FocusTarget="{Binding ElementName=m_mainInput}"/>
-                <memo:ImageButton ToolTip="新建笔记" Background="#FFE0E0E0" 
-                     FocusTarget="{Binding ElementName=m_mainInput}"/>
-                <memo:ImageButton ToolTip="新建笔记" Background="#FF767676" 
-                     FocusTarget="{Binding ElementName=m_mainInput}"/>
+                                  FocusTarget="{Binding ElementName=m_mainInput}" />
+                <memo:ImageButton ToolTip="新建笔记" Background="#FFA1EF9B"
+                                  FocusTarget="{Binding ElementName=m_mainInput}" />
+                <memo:ImageButton ToolTip="新建笔记" Background="#FFFFAFDF"
+                                  FocusTarget="{Binding ElementName=m_mainInput}" />
+                <memo:ImageButton ToolTip="新建笔记" Background="#FFD7AFFF"
+                                  FocusTarget="{Binding ElementName=m_mainInput}" />
+                <memo:ImageButton ToolTip="新建笔记" Background="#FF9EDFFF"
+                                  FocusTarget="{Binding ElementName=m_mainInput}" />
+                <memo:ImageButton ToolTip="新建笔记" Background="#FFE0E0E0"
+                                  FocusTarget="{Binding ElementName=m_mainInput}" />
+                <memo:ImageButton ToolTip="新建笔记" Background="#FF767676"
+                                  FocusTarget="{Binding ElementName=m_mainInput}" />
             </UniformGrid>
         </StackPanel>
     </Grid>

@@ -4,7 +4,7 @@ using System.Windows.Documents;
 
 namespace Memo
 {
-    public partial class MemoWindow : Window
+    public partial class MemoWindow
     {
         private void BoldBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -13,8 +13,8 @@ namespace Memo
 
         private void ItalicBtn_Click(object sender, RoutedEventArgs e)
         {
-            var selection = m_mainInput.Selection;
-            var endPos = selection.Start.GetPositionAtOffset(1);
+            TextSelection selection = m_mainInput.Selection;
+            TextPointer endPos = selection.Start.GetPositionAtOffset(1);
             if (null == endPos)
             {
                 return;
@@ -22,7 +22,6 @@ namespace Memo
 
             m_mainInput.Selection.Select(selection.Start, endPos);
             //m_mainInput.Focus();
-            return;
             //var obj = .GetPropertyValue(TextElement.FontStyleProperty);
             //if (null == obj
             //    || (obj is FontStyle fontStyle && fontStyle != FontStyles.Italic))
@@ -38,10 +37,10 @@ namespace Memo
 
         private void UnderlineBtn_Click(object sender, RoutedEventArgs e)
         {
-            var selection = m_mainInput.Selection;
+            TextSelection selection = m_mainInput.Selection;
             if (!selection.IsEmpty)
             {
-                var tdc = (TextDecorationCollection)selection.GetPropertyValue(Inline.TextDecorationsProperty);
+                var tdc = (TextDecorationCollection) selection.GetPropertyValue(Inline.TextDecorationsProperty);
                 if (tdc == null || !tdc.SequenceEqual(TextDecorations.Underline))
                 {
                     selection.ApplyPropertyValue(Inline.TextDecorationsProperty, TextDecorations.Underline);
@@ -57,10 +56,10 @@ namespace Memo
 
         private void StrikeThroughBtn_Click(object sender, RoutedEventArgs e)
         {
-            var selection = m_mainInput.Selection;
+            TextSelection selection = m_mainInput.Selection;
             if (!selection.IsEmpty)
             {
-                var tdc = (TextDecorationCollection)selection.GetPropertyValue(Inline.TextDecorationsProperty);
+                var tdc = (TextDecorationCollection) selection.GetPropertyValue(Inline.TextDecorationsProperty);
                 if (tdc == null || !tdc.SequenceEqual(TextDecorations.Strikethrough))
                 {
                     selection.ApplyPropertyValue(Inline.TextDecorationsProperty, TextDecorations.Strikethrough);

@@ -22,17 +22,18 @@
                 MouseLeftButtonDown="TitleBar_MouseLeftButtonDown" Cursor="SizeAll">
             <Grid>
                 <StackPanel Orientation="Horizontal">
-                    <memo:ImageButton x:Name="m_newBtn" ToolTip="新建笔记" Source="res/new.png" Click="OnNewClick" 
-                                      ImageViewport="-0.01,-0.01,1,1" ImageViewbox="0.01,0.01,1,1"/>
+                    <memo:ImageButton x:Name="m_newBtn" ToolTip="新建笔记" Source="res/new.png" Click="OnNewClick"
+                                      ImageViewport="-0.01,-0.01,1,1" ImageViewbox="0.01,0.01,1,1" />
                     <TextBlock Name="m_titleStr" Text="标题" VerticalAlignment="Center" Margin="0,7,0,6" Cursor="Arrow"
                                Height="17" MouseLeftButtonDown="TitleStr_MouseLeftButtonDown" />
                     <TextBox Name="m_titleInput" Text="标题" VerticalContentAlignment="Center" Margin="0,2,0,2"
-                     Height="25" MouseLeftButtonDown="TitleStr_MouseLeftButtonDown" LostFocus="TitleInput_LostFocus"
-                     Width="105" Visibility="Collapsed" KeyDown="TitleInput_KeyDown" />
+                             Height="25" MouseLeftButtonDown="TitleStr_MouseLeftButtonDown"
+                             LostFocus="TitleInput_LostFocus"
+                             Width="105" Visibility="Collapsed" KeyDown="TitleInput_KeyDown" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <memo:ImageButton x:Name="m_optionBtn" ToolTip="菜单"
-                    Click="OnOptionClick" Source="res/option.png" />
+                                      Click="OnOptionClick" Source="res/option.png" />
                     <memo:ImageButton x:Name="m_topmostBtn"
                                       ToolTipOpening="OnTopmostBtnTipOpen" ToolTip="置顶"
                                       Click="OnTopMostClick" RenderTransformOrigin="0.5,0.5" Source="res/pin.png">
@@ -42,49 +43,49 @@
                             </TransformGroup>
                         </Button.RenderTransform>
                     </memo:ImageButton>
-                    <memo:ImageButton x:Name="m_closeBtn" 
+                    <memo:ImageButton x:Name="m_closeBtn"
                                       ToolTip="关闭窗口" Source="res/close.png" Click="OnCloseClick" />
                 </StackPanel>
             </Grid>
         </Border>
         <RichTextBox Name="m_mainInput" Grid.Row="1" Margin="10" FontSize="16"
-                 Background="Transparent" BorderThickness="0" AcceptsReturn="True"
-                 VerticalScrollBarVisibility="Auto">
+                     Background="Transparent" BorderThickness="0" AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Auto">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
-                    <Setter Property="Margin" Value="0"/>
-                    <Setter Property="LineHeight" Value="20"/>
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="LineHeight" Value="20" />
                 </Style>
             </RichTextBox.Resources>
             <FlowDocument>
                 <Paragraph>
-                    <Run Text="服务区分按时发顺丰请问发顺丰"/>
+                    <Run Text="服务区分按时发顺丰请问发顺丰" />
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <Border Name="m_mask" Background="#66FFFFFF" Grid.RowSpan="2"
-                Visibility="Hidden" MouseDown="Mask_MouseDown"/>
+        <Border Name="m_mask" Background="#66FFFFFF" Grid.Row="0" Grid.RowSpan="2"
+                Visibility="Hidden" MouseDown="Mask_MouseDown" />
         <Path Data="M5,279 L220.0837,279" Fill="Transparent" HorizontalAlignment="Left" Height="1"
-              Grid.Row="2" Stretch="Fill" Stroke="#FFE0D7D7" VerticalAlignment="Top"/>
+              Grid.Row="2" Stretch="Fill" Stroke="#FFE0D7D7" VerticalAlignment="Top" />
         <StackPanel Orientation="Horizontal" Grid.Row="2">
             <memo:ImageButton x:Name="m_boldBtn" ToolTip="关闭窗口"
-                    Click="BoldBtn_Click" FocusTarget="{Binding ElementName=m_mainInput}" 
-                    Source="res/bold.png" ImageOpacity="0.5"/>
+                              Click="BoldBtn_Click" FocusTarget="{Binding ElementName=m_mainInput}"
+                              Source="res/bold.png" ImageOpacity="0.5" />
             <memo:ImageButton x:Name="m_italicBtn" ToolTip="关闭窗口"
-                    Click="ItalicBtn_Click" FocusTarget="{Binding ElementName=m_mainInput}"
-                    Source="res/italic.png" ImageOpacity="0.7"/>
+                              Click="ItalicBtn_Click" FocusTarget="{Binding ElementName=m_mainInput}"
+                              Source="res/italic.png" ImageOpacity="0.7" />
             <memo:ImageButton x:Name="m_underlineBtn" ToolTip="关闭窗口"
-                    Click="UnderlineBtn_Click" FocusTarget="{Binding ElementName=m_mainInput}"
-                    Source="res/underline.png"/>
+                              Click="UnderlineBtn_Click" FocusTarget="{Binding ElementName=m_mainInput}"
+                              Source="res/underline.png" />
             <memo:ImageButton x:Name="m_strikeThroughBtn" ToolTip="关闭窗口"
-                    Click="StrikeThroughBtn_Click" FocusTarget="{Binding ElementName=m_mainInput}"
-                    Source="res/strike_through.png" ImageOpacity="0.5"/>
+                              Click="StrikeThroughBtn_Click" FocusTarget="{Binding ElementName=m_mainInput}"
+                              Source="res/strike_through.png" ImageOpacity="0.5" />
             <memo:ImageButton x:Name="m_serialBtn" ToolTip="关闭窗口"
-                    Click="StrikeThroughBtn_Click" FocusTarget="{Binding ElementName=m_mainInput}"
-                    Source="res/serial.png"/>
+                              Click="StrikeThroughBtn_Click" FocusTarget="{Binding ElementName=m_mainInput}"
+                              Source="res/serial.png" />
             <memo:ImageButton x:Name="m_pictureBtn" ToolTip="关闭窗口"
-                    Click="StrikeThroughBtn_Click" FocusTarget="{Binding ElementName=m_mainInput}"
-                    Source="res/picture.png"/>
+                              Click="StrikeThroughBtn_Click" FocusTarget="{Binding ElementName=m_mainInput}"
+                              Source="res/picture.png" />
         </StackPanel>
     </Grid>
 </Window>

@@ -1,10 +1,10 @@
-﻿using Memo.tools;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using Memo.tools;
 
 namespace Memo
 {
@@ -13,12 +13,11 @@ namespace Memo
     /// </summary>
     public partial class OptionControl : UserControl
     {
+        private EventHandler m_hideHandler;
         private MemoWindow m_memoWnd;
+
         private Dictionary<uint, ColorRadioButton> m_radioBtnMap
             = new Dictionary<uint, ColorRadioButton>();
-        private EventHandler m_hideHandler;
-
-        public double NormalHeight { get; private set; }
 
         public OptionControl()
         {
@@ -27,6 +26,8 @@ namespace Memo
             NormalHeight = Height;
             Height = 0;
         }
+
+        public double NormalHeight { get; }
 
         public void Show(MemoWindow wnd, EventHandler hideHandler)
         {
@@ -42,7 +43,7 @@ namespace Memo
             m_hideHandler = hideHandler + delegate
             {
                 Visibility = Visibility.Hidden;
-                Console.WriteLine("~~~~~~~~~~~~~~");    //SYTest
+                Console.WriteLine("~~~~~~~~~~~~~~"); //SYTest
             };
         }
 
@@ -69,14 +70,14 @@ namespace Memo
         private void InitColorCtrl()
         {
             m_colorGrid.Children.Clear();
-            foreach (var info in Global.ColorInfos)
+            foreach (ThemeInfo info in Global.ColorInfos)
             {
-                ColorRadioButton btn = new ColorRadioButton
+                var btn = new ColorRadioButton
                 {
                     Background = new SolidColorBrush(Tools.ColorFromString(info.DisplayColor)),
                     ToolTip = info.Desc,
                     DataContext = info.Id,
-                    MarkStroke = info.IsDark ? Brushes.White : Brushes.Black,
+                    MarkStroke = info.IsDark ? Brushes.White : Brushes.Black
                 };
 
                 m_radioBtnMap.Add(info.Id, btn);
@@ -87,10 +88,13 @@ namespace Memo
 
         private void PlayAnim(bool isReverse, EventHandler onFinished = null)
         {
-            DoubleAnimation doubleAnim = new DoubleAnimation();
-            doubleAnim.From = Height;
-            doubleAnim.To = isReverse ? 0 : NormalHeight;
-            doubleAnim.Duration = new Duration(TimeSpan.Parse("0:0:0.2"));
+            var doubleAnim = new DoubleAnimation
+            {
+                From = Height,
+                To = isReverse ? 0 : NormalHeight,
+                Duration = new Duration(TimeSpan.Parse("0:0:0.2"))
+            };
+            
             if (null != onFinished)
             {
                 doubleAnim.Completed += onFinished;
@@ -106,7 +110,7 @@ namespace Memo
                 return;
             }
 
-            uint themeId = (uint)btn.DataContext;
+            var themeId = (uint) btn.DataContext;
             if (m_memoWnd.ThemeId != themeId)
             {
                 m_memoWnd.SetTheme(themeId);
