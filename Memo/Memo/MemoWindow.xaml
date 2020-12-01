@@ -22,14 +22,14 @@
                 MouseLeftButtonDown="TitleBar_MouseLeftButtonDown" Cursor="SizeAll">
             <Grid>
                 <StackPanel Orientation="Horizontal">
-                    <memo:ImageButton x:Name="m_newBtn" ToolTip="新建笔记" Source="res/new.png" Click="OnNewClick"
-                                      ImageViewport="-0.01,-0.01,1,1" ImageViewbox="0.01,0.01,1,1" />
+                    <memo:ImageButton x:Name="m_newBtn" ToolTip="新建笔记" Source="res/new.png" Click="OnNewClick"/>
                     <TextBlock Name="m_titleStr" Text="标题" VerticalAlignment="Center" Margin="0,7,0,6" Cursor="Arrow"
                                Height="17" MouseLeftButtonDown="TitleStr_MouseLeftButtonDown" />
                     <TextBox Name="m_titleInput" Text="标题" VerticalContentAlignment="Center" Margin="0,2,0,2"
                              Height="25" MouseLeftButtonDown="TitleStr_MouseLeftButtonDown"
                              CaretBrush="{Binding RelativeSource={RelativeSource Self}
                              , Path=Foreground}"
+                             Background="Transparent" BorderThickness="0"
                              LostFocus="TitleInput_LostFocus"
                              Width="105" Visibility="Collapsed" KeyDown="TitleInput_KeyDown" />
                 </StackPanel>
