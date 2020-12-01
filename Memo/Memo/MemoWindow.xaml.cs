@@ -24,7 +24,9 @@ namespace Memo
         private static Dictionary<string, ImageSource> g_btnToImgWhiteMap
             = new Dictionary<string, ImageSource>();
 
-        private Button[] m_btnsNeedChangeColor;
+        private List<ImageButton> m_btnsNeedChangeColor
+            = new List<ImageButton>();
+
         private DoubleAnimation m_doubleAnim;
         private OptionControl m_optionCtrl;
 
@@ -73,12 +75,18 @@ namespace Memo
             MinHeight = m_titleBar.ActualHeight + BorderThickness.Top + BorderThickness.Bottom;
             m_doubleAnim = new DoubleAnimation();
             m_titleBar.Height = 0;
-            return;
-            m_btnsNeedChangeColor = new[] {m_newBtn, m_optionBtn, m_topmostBtn, m_closeBtn};
+            Tools.EnumVisual(m_grid, myVisual =>
+            {
+                if (myVisual is ImageButton btn)
+                {
+                    m_btnsNeedChangeColor.Add(btn);
+                }
+            });
+
             if (null == g_btnToImgBlackMap
                 || g_btnToImgBlackMap.Count <= 0)
             {
-                foreach (Button btn in m_btnsNeedChangeColor)
+                foreach (ImageButton btn in m_btnsNeedChangeColor)
                 {
                     g_btnToImgBlackMap?.Add(btn.Name, ((ImageBrush) btn.Background).ImageSource);
                 }
@@ -204,7 +212,7 @@ namespace Memo
 
             Foreground = new SolidColorBrush(info.IsDark ? Colors.White : Colors.Black);
             m_mainInput.Foreground = Foreground;
-            foreach (Button btn in m_btnsNeedChangeColor)
+            foreach (ImageButton btn in m_btnsNeedChangeColor)
             {
                 ChangeBtnColor(btn, info.IsDark);
             }
@@ -229,7 +237,7 @@ namespace Memo
             }
         }
 
-        private unsafe void ChangeBtnColor(Button btn, bool isDark)
+        private unsafe void ChangeBtnColor(ImageButton btn, bool isDark)
         {
             Dictionary<string, ImageSource> map = isDark ? g_btnToImgWhiteMap : g_btnToImgBlackMap;
             if (map.TryGetValue(btn.Name, out ImageSource source))

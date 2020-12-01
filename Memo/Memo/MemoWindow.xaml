@@ -60,6 +60,7 @@
             <FlowDocument>
                 <Paragraph>
                     <Run Text="服务区分按时发顺丰请问发顺丰" />
+                    <Run Text="1232132123213" TextDecorations="Underline" />
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
@@ -87,5 +88,21 @@
                               Click="StrikeThroughBtn_Click" FocusTarget="{Binding ElementName=m_mainInput}"
                               Source="res/picture.png" />
         </StackPanel>
+        <!-- <StackPanel Orientation="Horizontal"> -->
+        <!--     <ToolBar> -->
+        <!--         <ToggleButton x:Name="boldButton" Command="EditingCommands.ToggleBold" ToolTip="Bold"> -->
+        <!--             <Image Source="res/bold.png" /> -->
+        <!--         </ToggleButton> -->
+        <!--         <ToggleButton x:Name="italicButton" Command="EditingCommands.ToggleItalic" ToolTip="Italic"> -->
+        <!--             <Image Source="res/bold.png" /> -->
+        <!--         </ToggleButton> -->
+        <!--         <ToggleButton x:Name="underlineButton" Command="EditingCommands.ToggleUnderline" ToolTip="Underline"> -->
+        <!--             <Image Source="res/bold.png" /> -->
+        <!--         </ToggleButton> -->
+        <!--         <Separator /> -->
+        <!--         <ComboBox x:Name="fonts" MinWidth="100" ItemsSource="{x:Static Fonts.SystemFontFamilies}" ToolTip="Font" /> -->
+        <!--         <ComboBox x:Name="fontSize" MinWidth="40" ToolTip="Font Size" /> -->
+        <!--     </ToolBar> -->
+        <!-- </StackPanel> -->
     </Grid>
 </Window>

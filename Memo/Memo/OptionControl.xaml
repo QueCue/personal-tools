@@ -13,20 +13,13 @@
     <Grid>
         <StackPanel Orientation="Vertical">
             <UniformGrid Name="m_colorGrid" Rows="1" Height="50">
-                <memo:ImageButton ToolTip="新建笔记" Background="#FFFFE66E"
-                                  FocusTarget="{Binding ElementName=m_mainInput}" />
-                <memo:ImageButton ToolTip="新建笔记" Background="#FFA1EF9B"
-                                  FocusTarget="{Binding ElementName=m_mainInput}" />
-                <memo:ImageButton ToolTip="新建笔记" Background="#FFFFAFDF"
-                                  FocusTarget="{Binding ElementName=m_mainInput}" />
-                <memo:ImageButton ToolTip="新建笔记" Background="#FFD7AFFF"
-                                  FocusTarget="{Binding ElementName=m_mainInput}" />
-                <memo:ImageButton ToolTip="新建笔记" Background="#FF9EDFFF"
-                                  FocusTarget="{Binding ElementName=m_mainInput}" />
-                <memo:ImageButton ToolTip="新建笔记" Background="#FFE0E0E0"
-                                  FocusTarget="{Binding ElementName=m_mainInput}" />
-                <memo:ImageButton ToolTip="新建笔记" Background="#FF767676"
-                                  FocusTarget="{Binding ElementName=m_mainInput}" />
+                <memo:ImageButton ToolTip="新建笔记" Background="#FFFFE66E" />
+                <memo:ImageButton ToolTip="新建笔记" Background="#FFA1EF9B" />
+                <memo:ImageButton ToolTip="新建笔记" Background="#FFFFAFDF" />
+                <memo:ImageButton ToolTip="新建笔记" Background="#FFD7AFFF" />
+                <memo:ImageButton ToolTip="新建笔记" Background="#FF9EDFFF" />
+                <memo:ImageButton ToolTip="新建笔记" Background="#FFE0E0E0" />
+                <memo:ImageButton ToolTip="新建笔记" Background="#FF767676" />
             </UniformGrid>
         </StackPanel>
     </Grid>
