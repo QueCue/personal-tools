@@ -212,6 +212,7 @@ namespace Memo
 
             Foreground = new SolidColorBrush(info.IsDark ? Colors.White : Colors.Black);
             m_mainInput.Foreground = Foreground;
+            m_titleInput.Foreground = Foreground;
             foreach (ImageButton btn in m_btnsNeedChangeColor)
             {
                 ChangeBtnColor(btn, info.IsDark);

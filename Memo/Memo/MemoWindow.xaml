@@ -28,6 +28,8 @@
                                Height="17" MouseLeftButtonDown="TitleStr_MouseLeftButtonDown" />
                     <TextBox Name="m_titleInput" Text="标题" VerticalContentAlignment="Center" Margin="0,2,0,2"
                              Height="25" MouseLeftButtonDown="TitleStr_MouseLeftButtonDown"
+                             CaretBrush="{Binding RelativeSource={RelativeSource Self}
+                             , Path=Foreground}"
                              LostFocus="TitleInput_LostFocus"
                              Width="105" Visibility="Collapsed" KeyDown="TitleInput_KeyDown" />
                 </StackPanel>
@@ -49,6 +51,8 @@
             </Grid>
         </Border>
         <RichTextBox Name="m_mainInput" Grid.Row="1" Margin="10" FontSize="16"
+                     CaretBrush="{Binding RelativeSource={RelativeSource Self}
+                     , Path=Foreground}"
                      Background="Transparent" BorderThickness="0" AcceptsReturn="True"
                      VerticalScrollBarVisibility="Auto">
             <RichTextBox.Resources>
